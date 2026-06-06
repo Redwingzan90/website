@@ -3894,6 +3894,7 @@ function switchMap(btn) {
                   <div class='modal-lot ${lot.status === 'available' ? 'modal-lot-available' : 'modal-lot-sold'}'>
                     ${lot.id}
                     <span class=modal-lot-status>${lot.status}</span>
+                    ${lot.status === 'available' && lot.price ? '<div class=modal-lot-price>${lot.price}</div><div class=modal-lot-terms>${lot.terms}</div>' : ''}
                   </div>
                 `).join('')}
               </div>
