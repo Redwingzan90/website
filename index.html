@@ -1126,8 +1126,9 @@ h1,h2,h3,h4,.font-serif { font-family: 'Cormorant Garamond', serif; }
     }
     
     .lot-dot {
-      width: 20px;
-      height: 16px;
+      width: 24px;
+      min-height: 28px;
+      height: auto;
       border-radius: 2px;
       font-size: 7px;
       display: flex;
@@ -3810,7 +3811,7 @@ function switchMap(btn) {
                 <h3 class=property-title>${p.title}</h3>
                 <div class=lot-indicators>
                   ${p.lots.map(lot => `
-                    <div class='lot-dot ${lot.status === 'available' ? 'lot-available' : 'lot-sold'}'>${lot.id}${lot.status === 'available' && lot.price ? '<br><span class="lot-price">' + lot.price + '<br>' + lot.terms + '</span>' : ''}</div>
+                    <div class='lot-dot ${lot.status === 'available' ? 'lot-available' : 'lot-sold'}'>${lot.id}${lot.status === 'available' && lot.price ? `<br><span class="lot-price">${lot.price}<br>${lot.terms}</span>` : ''}</div>
                   `).join('')}
                 </div>
               `}
@@ -3894,7 +3895,7 @@ function switchMap(btn) {
                   <div class='modal-lot ${lot.status === 'available' ? 'modal-lot-available' : 'modal-lot-sold'}'>
                     ${lot.id}
                     <span class=modal-lot-status>${lot.status}</span>
-                    ${lot.status === 'available' && lot.price ? '<div class=modal-lot-price>${lot.price}</div><div class=modal-lot-terms>${lot.terms}</div>' : ''}
+                    ${lot.status === 'available' && lot.price ? `<div class=modal-lot-price>${lot.price}</div><div class=modal-lot-terms>${lot.terms}</div>` : ''}
                   </div>
                 `).join('')}
               </div>
