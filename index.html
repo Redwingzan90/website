@@ -2221,14 +2221,16 @@ h1,h2,h3,h4,.font-serif { font-family: 'Cormorant Garamond', serif; }
     }
     
     .modal-lot {
-      width: 72px;
-      height: 56px;
-      border-radius: 2px;
+      width: 80px;
+      min-height: 64px;
+      height: auto;
+      padding: 6px 4px;
+      border-radius: 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 700;
     }
     
@@ -3811,7 +3813,7 @@ function switchMap(btn) {
                 <h3 class=property-title>${p.title}</h3>
                 <div class=lot-indicators>
                   ${p.lots.map(lot => `
-                    <div class='lot-dot ${lot.status === 'available' ? 'lot-available' : 'lot-sold'}'>${lot.id}${lot.status === 'available' && lot.price ? `<br><span class="lot-price">${lot.price}<br>${lot.terms}</span>` : ''}</div>
+                    <div class='lot-dot ${lot.status === 'available' ? 'lot-available' : 'lot-sold'}'>${lot.id}</div>
                   `).join('')}
                 </div>
               `}
