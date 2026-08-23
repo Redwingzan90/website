@@ -102,9 +102,20 @@
       : isPlaceholder(p.downPayment) ? esc(p.monthly)
       : esc(p.downPayment) + ' down · ' + esc(p.monthly)
 
+    // The accessible name must carry what the schedule is FOR — price, terms
+    // and status. A bare title leaves a screen-reader user with 13 near-identical
+    // rows and none of the information they came for.
+    const label = [
+      p.title, p.price,
+      p.downPayment === 'Cash' ? 'cash sale'
+        : isPlaceholder(p.monthly) ? `${p.downPayment} down, call for terms`
+        : `${p.downPayment} down, ${p.monthly}`,
+      st.text,
+    ].filter(Boolean).join(', ')
+
     return `
     <button class="inst" type="button" data-id="${p.id}" data-reveal
-        aria-label="Open instrument ${String(i + 1).padStart(2, '0')} — ${esc(p.title)}">
+        aria-label="${esc(label)}">
       <span class="inst-no">No.<b>${String(i + 1).padStart(2, '0')}</b></span>
       <span class="inst-main">
         <span class="inst-title">${esc(p.title)}</span>
@@ -266,11 +277,21 @@
     document.body.style.overflow = 'hidden'
     if (window.KORR_LENIS) window.KORR_LENIS.stop()
     sheet.scrollTop = 0
-    // A visibility:hidden element cannot take focus. Force a style flush so
-    // the sheet is genuinely visible, then focus synchronously — rAF is not
-    // safe here because it never fires in a backgrounded tab.
+    // Two things fight this focus call: visibility (handled in CSS — it now
+    // flips instantly on open) and the click's own default action, which
+    // focuses the clicked row AFTER this handler returns. A task boundary wins
+    // both. setTimeout, not rAF: rAF never fires in a backgrounded tab.
     void sheet.offsetHeight
-    $('#sheetClose').focus()
+    // The browser's own click-focus lands on the row after this handler and
+    // takes focus back, so assert twice and let the later one win the race.
+    const takeFocus = () => {
+      if (sheet.getAttribute('aria-hidden') !== 'false') return
+      if (sheet.contains(document.activeElement)) return
+      $('#sheetClose').focus()
+    }
+    takeFocus()
+    setTimeout(takeFocus, 0)
+    setTimeout(takeFocus, 80)
     document.addEventListener('keydown', onSheetKey)
   }
 
@@ -503,12 +524,33 @@
 
     // mobile menu
     const mob = $('#mobile')
+    const burger = $('#burger')
+    const onMobKey = (e) => {
+      if (e.key === 'Escape') { setMob(false); return }
+      if (e.key !== 'Tab') return
+      const f = $$('a[href],button:not([disabled])', mob).filter(el => el.offsetParent !== null)
+      if (!f.length) return
+      const first = f[0], last = f[f.length - 1]
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus() }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus() }
+    }
     const setMob = (v) => {
       mob.dataset.open = v ? '1' : '0'
+      burger.setAttribute('aria-expanded', String(v))
       document.body.style.overflow = v ? 'hidden' : ''
       if (window.KORR_LENIS) v ? window.KORR_LENIS.stop() : window.KORR_LENIS.start()
+      if (v) {
+        void mob.offsetHeight          // visibility is instant on open now
+        $('#mobClose').focus()
+        document.addEventListener('keydown', onMobKey)
+      } else {
+        document.removeEventListener('keydown', onMobKey)
+        burger.focus()
+      }
     }
-    $('#burger').addEventListener('click', () => setMob(true))
+    burger.setAttribute('aria-expanded', 'false')
+    burger.setAttribute('aria-controls', 'mobile')
+    burger.addEventListener('click', () => setMob(true))
     $('#mobClose').addEventListener('click', () => setMob(false))
     $$('#mobile a').forEach(a => a.addEventListener('click', () => setMob(false)))
 
@@ -522,6 +564,10 @@
         e.preventDefault()
         if (window.KORR_LENIS) window.KORR_LENIS.scrollTo(t, { offset: -60 })
         else t.scrollIntoView({ behavior: REDUCE.matches ? 'auto' : 'smooth' })
+        // preventDefault also discards the browser's focus reset, so the skip
+        // link would scroll but leave focus in the header it was meant to skip.
+        if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1')
+        t.focus({ preventScroll: true })
       })
     })
 

@@ -328,7 +328,7 @@ img { max-width: 100%; display: block; }
   font-family: var(--doc); font-size: 0.74rem; letter-spacing: 0.06em;
   padding: 0.6rem 0.9rem; min-height: 44px; cursor: pointer;
   text-transform: uppercase;
-  transition: all 0.2s var(--ease);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease), opacity 0.2s var(--ease);
 }
 .chip:hover { border-color: var(--ink); color: var(--ink); }
 .chip[aria-pressed="true"], .chip.on {
@@ -534,9 +534,16 @@ img { max-width: 100%; display: block; }
   background: var(--paper);
   overflow-y: auto; overscroll-behavior: contain;
   opacity: 0; visibility: hidden;
-  transition: opacity 0.32s var(--ease), visibility 0.32s;
+  /* visibility must flip INSTANTLY on open, delayed only on close. Transitioning
+     it means the element is still `hidden` in the same task that sets
+     aria-hidden="false" — and a hidden element cannot take focus, which
+     silently breaks the focus trap. */
+  transition: opacity 0.32s var(--ease), visibility 0s linear 0.32s;
 }
-.sheet[aria-hidden="false"] { opacity: 1; visibility: visible; }
+.sheet[aria-hidden="false"] {
+  opacity: 1; visibility: visible;
+  transition: opacity 0.32s var(--ease), visibility 0s linear 0s;
+}
 .sheet-bar {
   position: sticky; top: 0; z-index: 5;
   display: flex; align-items: center; gap: 1rem;
@@ -551,7 +558,7 @@ img { max-width: 100%; display: block; }
 .icon-btn {
   width: 46px; height: 46px; display: grid; place-content: center;
   background: transparent; border: 1px solid var(--rule); cursor: pointer;
-  transition: all 0.2s var(--ease);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease), opacity 0.2s var(--ease);
 }
 .icon-btn:hover { background: var(--ink); color: var(--paper-lift); border-color: var(--ink); }
 .icon-btn svg { width: 17px; height: 17px; }
@@ -634,7 +641,17 @@ img { max-width: 100%; display: block; }
 #inquiry .caption { color: rgba(233, 231, 225, 0.60); color: color-mix(in srgb, var(--paper) 60%, transparent); }
 #inquiry .h2 { color: var(--paper-lift); }
 #inquiry .prose { color: rgba(233, 231, 225, 0.80); color: color-mix(in srgb, var(--paper) 80%, transparent); }
+/* Grid and flex items default to min-width:auto, so the widest <option> in the
+   property select (a full property title plus price) set a ~428px floor that
+   propagated up and pushed half the contact column off a 360px screen. */
 .form-wrap { display: grid; gap: 2.5rem; margin-top: 2.5rem; }
+.form-wrap > *, .contact-row, .contact-row > div, #form, .field, .two > * { min-width: 0; }
+.field input, .field select, .field textarea { min-width: 0; max-width: 100%; }
+.contact-row dd, .contact-row dd a { overflow-wrap: anywhere; }
+.contact-row dd > a,
+#teamList a { min-height: 44px; display: inline-flex; align-items: center; }
+#teamList > div { min-height: 44px; }
+.icon-btn, .burger { flex: none; }
 @media (min-width: 940px) { .form-wrap { grid-template-columns: 1fr 1.1fr; gap: 4rem; } }
 
 .contact-row { display: grid; gap: 1.4rem; }
@@ -733,9 +750,17 @@ footer .mark span { color: rgba(233, 231, 225, 0.50); color: color-mix(in srgb, 
   position: fixed; inset: 0; z-index: 130; background: var(--paper);
   padding: 5rem var(--gutter) 2rem; display: grid; align-content: start; gap: 0.25rem;
   overflow-y: auto; overscroll-behavior: contain;
-  transform: translateY(-100%); transition: transform 0.4s var(--ease);
+  transform: translateY(-100%);
+  /* Hidden off-screen is not hidden: without visibility these controls stay in
+     the tab order and in the accessibility tree, at every breakpoint. */
+  visibility: hidden;
+  transition: transform 0.4s var(--ease), visibility 0s linear 0.4s;
 }
-.mobile[data-open="1"] { transform: translateY(0); }
+.mobile[data-open="1"] {
+  transform: translateY(0); visibility: visible;
+  transition: transform 0.4s var(--ease), visibility 0s linear 0s;
+}
+@media (min-width: 901px) { .mobile { display: none; } }
 .mobile a {
   font-family: var(--ui); font-weight: 650; font-size: 1.6rem; letter-spacing: -0.025em;
   text-decoration: none; padding: 0.75rem 0; border-bottom: 1px solid var(--rule);
@@ -849,10 +874,14 @@ footer .mark span { color: rgba(233, 231, 225, 0.50); color: color-mix(in srgb, 
     background: var(--ink); color: var(--paper-lift);
     border-top: 2px solid var(--stamp);
     padding: 0.6rem 0.9rem calc(0.6rem + env(safe-area-inset-bottom));
-    transform: translateY(110%); transition: transform 0.42s var(--ease);
+    transform: translateY(110%); visibility: hidden;
+    transition: transform 0.42s var(--ease), visibility 0s linear 0.42s;
     align-items: center; gap: 0.8rem;
   }
-  .callbar[data-show="1"] { transform: translateY(0); }
+  .callbar[data-show="1"] {
+    transform: translateY(0); visibility: visible;
+    transition: transform 0.42s var(--ease), visibility 0s linear 0s;
+  }
   .callbar dt {
     font-family: var(--doc); font-size: 0.6rem; letter-spacing: 0.14em;
     text-transform: uppercase; color: rgba(233, 231, 225, 0.60); /* fallback */
