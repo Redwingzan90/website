@@ -377,6 +377,8 @@
         })
         if (!res.ok) throw new Error('status ' + res.status)
         form.reset()
+        // Report the conversion only once the enquiry genuinely succeeded.
+        try { if (window.whop) window.whop.track('lead') } catch (e) {}
         msg.className = 'form-msg ok'
         msg.textContent = 'Received. We will call you back on the number you gave. For anything urgent, ring ' + D.phone + '.'
         msg.hidden = false

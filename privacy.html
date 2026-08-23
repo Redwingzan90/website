@@ -22,6 +22,13 @@
   .doc ul { margin-top: 0.7rem; padding-left: 1.1rem; display: grid; gap: 0.45rem; }
   .doc .rule-top { border-top: 2px solid var(--ink); margin-top: 2.6rem; padding-top: 0.9rem; }
 </style>
+
+<!-- Whop pixel — measures ad conversions. Disclosed in /privacy.html. -->
+<script>
+!function(w,d,s,u,n,a,b){if(w[n])return;a=w[n]={q:[],t:+new Date,s:[],o:u,track:function(){a.q.push([+new Date].concat([].slice.call(arguments)))},setScope:function(){a.s=[].slice.call(arguments).filter(function(x){return typeof x==="string"});a.q.push([+new Date,"setScope"].concat(a.s))},scope:function(){var c=[].slice.call(arguments);return{track:function(){a.q.push([+new Date].concat([].slice.call(arguments)).concat([{__scope:c}]))}}}};b=d.createElement(s);b.async=1;b.src=u+"/s.js";d.getElementsByTagName(s)[0].parentNode.insertBefore(b,d.getElementsByTagName(s)[0])}(window,document,"script","https://t.whop.tw","whop");
+whop.setScope("biz_eYTVtfVYAdO3by");
+whop.track("page");
+</script>
 </head>
 <body class="sheet-ground">
 
@@ -38,7 +45,7 @@
 <main class="doc">
   <p class="caption">KORR Building Company LLC</p>
   <h1 class="h2" style="margin-top:.7rem">Privacy Policy</h1>
-  <p class="typed" style="margin-top:.8rem;color:var(--ink-3)">Last updated 23 August 2026</p>
+  <p class="typed" style="margin-top:.8rem;color:var(--ink-3)">Last updated 24 August 2026</p>
 
   <p style="margin-top:1.6rem">
     This policy describes what this website collects, why, and who receives it. It covers
@@ -63,8 +70,9 @@
 
   <h3>What we do not collect</h3>
   <p>
-    This site sets no cookies of its own, runs no analytics, and does not track you across
-    other websites. There is no login and no account.
+    We set no cookies of our own, run no analytics of our own, and there is no login and no
+    account. We do run one advertising measurement pixel — described under
+    <a href="#advertising">Advertising</a> below.
   </p>
 
   <h2 class="h3">Why we use it</h2>
@@ -92,18 +100,31 @@
     ask and we will remove it.
   </p>
 
-  <h2 class="h3">Advertising</h2>
+  <h2 class="h3" id="advertising">Advertising</h2>
   <p>
-    We may run advertising on Facebook, Instagram, or TikTok. If we place an advertising
-    pixel on this site, those platforms will set cookies and may build an advertising
-    profile from your visit, subject to their own policies. <strong>No advertising pixel is
-    installed as of the date above.</strong> This paragraph will be updated, and a cookie
-    notice added, before one is.
+    We advertise on Facebook, Instagram, and TikTok, and we run those campaigns through
+    <strong>Whop</strong>. <strong>The Whop measurement pixel is installed on this site.</strong>
+    It loads from <code>t.whop.tw</code> on every page and records that a page was viewed,
+    and it records when an enquiry form is successfully submitted — so we can tell which
+    advertisements actually produce enquiries.
+  </p>
+  <p>
+    The pixel does not receive the contents of your enquiry. It is told that a submission
+    happened, not what you wrote, and we do not pass your name, telephone number or email
+    to it. Whop and the advertising platforms may set their own identifiers and may use
+    what they collect under their own privacy policies, which we do not control.
+  </p>
+  <p>
+    If you would rather not be measured this way, a tracking-protection or ad-blocking
+    extension will stop the pixel loading, and browsers offer a "Do Not Track" or
+    anti-tracking setting. Blocking it does not affect the site — the enquiry form, the
+    telephone numbers and every property page work exactly the same.
   </p>
   <p>
     We advertise land and homes. We do not target advertising by race, colour, religion,
     sex, familial status, national origin, disability, or any other protected class, and we
-    use the housing advertising category the platforms require.
+    use the housing advertising category the platforms require, which restricts that
+    targeting by design.
   </p>
 
   <h2 class="h3">Your choices</h2>
