@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /_
+Disallow: /PRODUCT.md
+Disallow: /DESIGN.md
+Disallow: /data.snapshot.json
+
+Sitemap: https://korrbuildingcollc.netlify.app/sitemap.xml
