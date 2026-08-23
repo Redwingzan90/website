@@ -198,13 +198,17 @@ assets['korr-square'] = (S) => {
   const l1 = textPath(A_BOLD, 'Land,', h1, { x: pad, y: S * 0.60 })
   const l2 = textPath(A_BOLD, 'conveyed', h1, { x: pad, y: S * 0.60 + h1 * 0.95 })
   const l3 = textPath(A_BOLD, 'without a bank.', h1, { x: pad, y: S * 0.60 + h1 * 1.90 })
-  const sSize = S * 0.030
-  const s1 = textPath(C_REG, 'NO CREDIT CHECK  ·  NO QUALIFYING', sSize, { x: pad, y: S * 0.875, spacing: sSize * 0.14 })
-  const s2 = textPath(C_BOLD, 'FROM $29,900 WITH $425 DOWN  ·  480-453-4044', sSize, { x: pad, y: S * 0.925, spacing: sSize * 0.14 })
+  const maxW = S - pad * 2                     // nothing may run past the margin
+  const t1 = 'NO CREDIT CHECK  ·  NO QUALIFYING'
+  const t2 = 'FROM $29,900 WITH $425 DOWN  ·  480-453-4044'
+  const z1 = fitLine(C_REG, t1, maxW, S * 0.030, 0.14)
+  const z2 = fitLine(C_BOLD, t2, maxW, S * 0.030, 0.14)
+  const s1 = textPath(C_REG, t1, z1, { x: pad, y: S * 0.875, spacing: z1 * 0.14 })
+  const s2 = textPath(C_BOLD, t2, z2, { x: pad, y: S * 0.925, spacing: z2 * 0.14 })
   return doc(S, S,
     `<line x1="${pad}" y1="${S*0.155}" x2="${S-pad}" y2="${S*0.155}" stroke="${P.ink}" stroke-width="2"/>` +
     `<g fill="${P.ink3}">${cap.svg}</g>` +
-    stampSVG(S * 0.62, S * 0.325, S * 0.185, -7) +
+    stampSVG(S * 0.635, S * 0.375, S * 0.175, -7) +
     `<g fill="${P.ink}">${l1.svg}${l2.svg}</g><g fill="${P.stamp}">${l3.svg}</g>` +
     `<g fill="${P.ink3}">${s1.svg}</g><g fill="${P.stamp}">${s2.svg}</g>`)
 }
