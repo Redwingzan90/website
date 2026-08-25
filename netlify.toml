@@ -1,35 +1,17 @@
 # Netlify configuration — KORR Building Co.
-# The site is plain static files with no build step, published from the repo root.
+#
+# The site is plain static files with no build step.
+#
+# publish points at site/, which is the whole safety model here. The repo root
+# used to be the web root, so every working file — the photo inbox, the HTML
+# backups, the data snapshots — was publicly fetchable, and the only thing
+# stopping them shipping was a hand-maintained list of 404 redirects below.
+# Miss one and it goes live. Now a file is private unless somebody deliberately
+# puts it in site/, and nothing has to be remembered.
 
 [build]
-  publish = "."
+  publish = "site"
   command = ""
-
-# The repo root is the web root, so internal working files would otherwise be
-# publicly fetchable. Serve them as 404 instead.
-[[redirects]]
-  from = "/PRODUCT.md"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/DESIGN.md"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/_*"
-  to = "/404.html"
-  status = 404
-  force = true
-
-[[redirects]]
-  from = "/data.snapshot.json"
-  to = "/404.html"
-  status = 404
-  force = true
 
 # Long-lived caching for fingerprint-stable assets, none for the document.
 [[headers]]

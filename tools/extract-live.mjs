@@ -3,7 +3,7 @@
 // is visible before anything is overwritten.
 import fs from 'node:fs'
 
-const html = fs.readFileSync('live.html', 'utf8')
+const html = fs.readFileSync('archive/live.html', 'utf8')
 
 function grab (name, open, close) {
   const i = html.indexOf(`const ${name} = ${open}`)
@@ -30,7 +30,7 @@ const live = {
   maps: grab('maps', '{', '}'),
 }
 
-const old = JSON.parse(fs.readFileSync('data.snapshot.json', 'utf8'))
+const old = JSON.parse(fs.readFileSync('data/data.snapshot.json', 'utf8'))
 
 const oldById = new Map(old.properties.map(p => [p.id, p]))
 const newById = new Map(live.properties.map(p => [p.id, p]))
@@ -82,5 +82,5 @@ for (const p of live.properties) for (const im of p.images || []) {
 console.log(`\nIMAGE PATHS referenced by live data: ${total} checked, ${missing.size} missing locally`)
 ;[...missing].slice(0, 12).forEach(m => console.log('   missing: ' + m))
 
-fs.writeFileSync('live.extract.json', JSON.stringify(live, null, 2))
+fs.writeFileSync('data/live.extract.json', JSON.stringify(live, null, 2))
 console.log('\nwrote live.extract.json')

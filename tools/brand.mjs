@@ -23,11 +23,11 @@ const P = {
 }
 
 // Archivo is variable — instance it so we get real condensed bold, not a fake.
-const archivo = fontkit.openSync('.fonts/Archivo-var.ttf')
+const archivo = fontkit.openSync('fonts/Archivo-var.ttf')
 const A_BOLD = archivo.getVariation({ wght: 700, wdth: 88 })
 const A_MED = archivo.getVariation({ wght: 500, wdth: 92 })
-const C_BOLD = fontkit.openSync('.fonts/CourierPrime-Bold.ttf')
-const C_REG = fontkit.openSync('.fonts/CourierPrime-Regular.ttf')
+const C_BOLD = fontkit.openSync('fonts/CourierPrime-Bold.ttf')
+const C_REG = fontkit.openSync('fonts/CourierPrime-Regular.ttf')
 
 // Lay out a string as an SVG path at a given size, with optional letter-spacing.
 function textPath (font, str, size, { x = 0, y = 0, spacing = 0, anchor = 'start' } = {}) {

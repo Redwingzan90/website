@@ -5,16 +5,16 @@ Static site — no build step, no framework. Deployed on Netlify from this repo.
 
 ## Changing a property
 
-**Never hand-edit `assets/data.js`.** It is generated.
+**Never hand-edit `site/assets/data.js`.** It is generated.
 
-1. Edit `data.snapshot.json` — the source of truth for every property fact.
+1. Edit `data/data.snapshot.json` — the source of truth for every property fact.
 2. Regenerate and check:
 
 ```bash
-node _build-data.mjs && node _verify-data.mjs
+node tools/build-data.mjs && node tools/verify-data.mjs
 ```
 
-`_verify-data.mjs` must print **PASS** before you commit. It proves nothing was
+`tools/verify-data.mjs` must print **PASS** before you commit. It proves nothing was
 lost against the snapshot, and it fails the build if the site would publish
 something the record contradicts.
 
@@ -32,18 +32,18 @@ something the record contradicts.
 ## Local preview
 
 ```bash
-node _serve.mjs 4321
+node tools/serve.mjs 4321
 ```
 
 Then open http://127.0.0.1:4321/
 
 ## Adding photographs
 
-Drop a folder into `add images/`, map it to a property id in `_add-photos.mjs`,
+Drop a folder into `photos-inbox/`, map it to a property id in `tools/add-photos.mjs`,
 then:
 
 ```bash
-node _add-photos.mjs && node _build-data.mjs && node _verify-data.mjs
+node tools/add-photos.mjs && node tools/build-data.mjs && node tools/verify-data.mjs
 ```
 
 This generates the `-640` / `-1280` webp variants the site serves. Camera
@@ -51,18 +51,45 @@ originals are gitignored — **keep your own backup of them.**
 
 ## Layout
 
+Netlify publishes **`site/` only**. Everything else in this repository is
+internal and cannot be fetched from the web — which is the point: the repo root
+used to be the web root, so the photo inbox, the HTML backups and the data
+snapshots were all publicly downloadable, and only a list of hand-written 404
+redirects stood in the way. A file is now private unless someone deliberately
+puts it in `site/`.
+
 ```
-index.html          the page
-assets/korr.css     design system
-assets/korr.js      rendering + interaction
-assets/data.js      GENERATED — do not edit
-assets/ink.js       the recording-stamp shader
-assets/motion.js    Lenis + GSAP scroll choreography
-vendor/             GSAP, ScrollTrigger, Lenis (vendored, no CDN at runtime)
-data.snapshot.json  SOURCE OF TRUTH for property facts
-PRODUCT.md          product truth: audience, constraints, what must never be invented
-DESIGN.md           the visual system as built
+site/                 PUBLISHED — everything here is on the internet
+  index.html          the page
+  privacy.html        privacy policy
+  404.html            not-found page
+  assets/korr.css     design system
+  assets/korr.js      rendering + interaction
+  assets/data.js      GENERATED - do not edit
+  assets/ink.js       the recording-stamp shader
+  assets/motion.js    Lenis + GSAP scroll choreography
+  vendor/             GSAP, ScrollTrigger, Lenis (vendored, no CDN at runtime)
+  images/             the photographs the site serves
+
+tools/                build and check scripts; run from the repo root
+  verify-data.mjs     must print PASS before any commit
+  build-data.mjs      regenerates site/assets/data.js from the snapshot
+  add-photos.mjs      imports photos-inbox/ and makes the webp variants
+  serve.mjs           local preview of site/ on http://127.0.0.1:4321
+  manifest.mjs        hashes every published file, to prove a refactor changed nothing
+
+data/                 SOURCE OF TRUTH
+  data.snapshot.json  every property fact
+  new-photos.json     photo-to-property mapping
+
+photos-inbox/         camera originals waiting to be placed on a property
+fonts/                brand source fonts (used to generate assets, not served)
+archive/              superseded copies kept as extraction baselines
+
+PRODUCT.md            product truth: audience, constraints, what must never be invented
+netlify.toml          publish directory, caching and security headers
 ```
+
 
 ## Ground rules
 

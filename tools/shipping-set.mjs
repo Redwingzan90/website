@@ -6,13 +6,13 @@ import vm from 'node:vm'
 
 const ctx = { window: {} }
 vm.createContext(ctx)
-vm.runInContext(fs.readFileSync('assets/data.js', 'utf8'), ctx)
+vm.runInContext(fs.readFileSync('site/assets/data.js', 'utf8'), ctx)
 const D = ctx.window.KORR_DATA
 
 const need = new Set([
-  'index.html', 'favicon.svg',
-  'assets/korr.css', 'assets/korr.js', 'assets/data.js', 'assets/ink.js', 'assets/motion.js',
-  'vendor/gsap.min.js', 'vendor/ScrollTrigger.min.js', 'vendor/lenis.min.js',
+  'site/index.html', 'site/favicon.svg',
+  'site/assets/korr.css', 'site/assets/korr.js', 'site/assets/data.js', 'site/assets/ink.js', 'site/assets/motion.js',
+  'site/vendor/gsap.min.js', 'site/vendor/ScrollTrigger.min.js', 'site/vendor/lenis.min.js',
 ])
 
 for (const p of D.properties) {
@@ -22,7 +22,7 @@ for (const p of D.properties) {
   }
 }
 // images referenced directly from markup / js (exhibit plates, overlays)
-const src = fs.readFileSync('index.html', 'utf8') + fs.readFileSync('assets/korr.js', 'utf8')
+const src = fs.readFileSync('site/index.html', 'utf8') + fs.readFileSync('site/assets/korr.js', 'utf8')
 for (const m of src.matchAll(/images\/[A-Za-z0-9_\-./]+/g)) {
   const b = m[0]
   if (/\.(webp|png|jpe?g|svg)$/i.test(b)) need.add(b)
@@ -73,5 +73,5 @@ console.log('\nlargest unused files:')
 extra.map(f => [size(f), f]).sort((a, b) => b[0] - a[0]).slice(0, 10)
   .forEach(([s, f]) => console.log(`  ${(s / 1024).toFixed(0).padStart(6)} KB  ${f}`))
 
-fs.writeFileSync('_shipping-set.txt', shipped.sort().join('\n'))
+fs.writeFileSync('data/shipping-set.txt', shipped.sort().join('\n'))
 console.log('\nwrote _shipping-set.txt')
