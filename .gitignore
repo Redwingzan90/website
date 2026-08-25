@@ -1,0 +1,33 @@
+# ---------------------------------------------------------------------------
+# KORR Building Co — what does NOT belong in the deployed repo.
+# Anything committed here is publicly served by Netlify, so keep it to the
+# files the site actually needs.
+# ---------------------------------------------------------------------------
+
+# NOTE ON THE CAMERA ORIGINALS
+# images/**/*.jpeg and "add images/" are ~81 MB the site never serves — it uses
+# the -640/-1280 .webp variants only. They are deliberately still tracked,
+# because this repo is currently their only off-machine copy. Once they are
+# backed up somewhere else, uncommenting the block below drops the repo from
+# ~96 MB to ~15 MB.
+#
+# images/**/*.jpeg
+# images/**/*.jpg
+# images/**/*.png
+# add images/
+
+# Captured copies of the previous site + superseded data
+live.html
+live.extract.json
+index.original.backup.html
+data.snapshot.local-downloads.json
+
+# Working files
+_shipping-set.txt
+_direction-payload*.json
+_new-photos.json
+.claude/
+node_modules/
+*.log
+.DS_Store
+Thumbs.db

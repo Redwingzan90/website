@@ -1,0 +1,924 @@
+@charset "utf-8";
+/* ===========================================================================
+   KORR BUILDING CO — THE ABSTRACT OF TITLE
+   The recorded chain of title, made navigable.
+   =========================================================================== */
+
+/* ---------------------------------------------------------------- tokens -- */
+:root {
+  /* Document stock. Cool, not cream — this is legal stock, not parchment. */
+  --paper:      #e9e7e1;
+  --paper-lift: #f3f1ec;   /* a sheet raised off the pile */
+  --paper-deep: #dcd8ce;   /* margin, gutter, the pile beneath */
+  --paper-edge: #cec9bc;
+
+  /* Ink */
+  --ink:        #14140f;
+  --ink-2:      #3a372f;
+  --ink-3:      #66614f;   /* muted — tinted from the ground, never grey */
+
+  /* Rules */
+  --rule:       #b3ad9e;
+  --rule-soft:  #d2ccbe;
+  --rule-hair:  #c4bdac;
+
+  /* The recorder's stamp. Oxblood aniline. Carries every active state. */
+  --stamp:      #8c2f28;
+  --stamp-lift: #a63c33;
+  --stamp-wash: rgba(140, 47, 40, 0.09);
+
+  /* Documentary-stamp green — reserved for the affirmative fact. */
+  --green:      #2f5d4a;
+  --green-wash: rgba(47, 93, 74, 0.10);
+
+  /* Signature blue-black */
+  --sig:        #1b2b45;
+
+  --doc: "Courier Prime", "Courier New", ui-monospace, monospace;
+  --ui:  "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --sheet:  74rem;
+  --measure: 68ch;
+
+  /* Structural gap between instruments — cut blocks, not thin dividers. */
+  --cut: clamp(4rem, 9vw, 8.5rem);
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------- baseline -- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: auto;            /* Lenis owns scrolling */
+  color-scheme: light;
+}
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  background: var(--paper-deep);
+  color: var(--ink);
+  font-family: var(--ui);
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  line-height: 1.65;
+  font-variant-numeric: tabular-nums lining-nums;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Browser surfaces belong to the design system too. */
+::selection { background: var(--stamp); color: var(--paper-lift); }
+:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+:where(a) { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+input, textarea, select, button { font: inherit; color: inherit; }
+input, textarea { caret-color: var(--stamp); }
+* { scrollbar-color: var(--rule) transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: var(--paper-deep); }
+::-webkit-scrollbar-thumb { background: var(--rule); border: 3px solid var(--paper-deep); }
+::-webkit-scrollbar-thumb:hover { background: var(--ink-3); }
+
+img { max-width: 100%; display: block; }
+
+.skip {
+  position: absolute; left: 0.5rem; top: -4rem; z-index: 200;
+  background: var(--ink); color: var(--paper-lift);
+  padding: 0.7rem 1.1rem; font: 600 0.8rem/1 var(--ui);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  transition: top 0.18s var(--ease);
+}
+.skip:focus { top: 0.5rem; }
+
+.vh {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* --------------------------------------------------------- paper surface -- */
+/* The security tint: hairline ruling, the way ledger stock is actually laid. */
+.sheet-ground {
+  background-color: var(--paper);
+  background-image: none; /* fallback */
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 30px,
+      color-mix(in srgb, var(--rule-hair) 26%, transparent) 30px 31px
+    );
+  background-position: 0 0;
+}
+
+/* ------------------------------------------------------------ typography -- */
+.caption {
+  font-family: var(--ui);
+  font-weight: 600;
+  font-size: clamp(0.66rem, 0.6rem + 0.18vw, 0.76rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.display {
+  font-family: var(--ui);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 1.2rem + 6.2vw, 5.75rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+  font-stretch: 88%;
+}
+
+.h2 {
+  font-family: var(--ui);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.1rem + 2.4vw, 3rem);
+  line-height: 1.03;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.h3 {
+  font-family: var(--ui);
+  font-weight: 650;
+  font-size: clamp(1.1rem, 0.98rem + 0.5vw, 1.35rem);
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+}
+
+.typed {
+  font-family: var(--doc);
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+}
+
+.prose { max-width: var(--measure); color: var(--ink-2); }
+.prose + .prose { margin-top: 1rem; }
+
+/* ------------------------------------------------------------- the rule -- */
+.rule { height: 1px; background: var(--rule); border: 0; }
+.rule-heavy { height: 3px; background: var(--ink); border: 0; }
+.rule-double { height: 4px; border: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+
+/* ============================================================ THE COLLAR == */
+.collar {
+  position: fixed; inset: 0 0 auto 0; z-index: 90;
+  background: rgba(233, 231, 225, 0.92); /* fallback */
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  -webkit-backdrop-filter: blur(7px) saturate(1.1);
+  backdrop-filter: blur(7px) saturate(1.1);
+  border-bottom: 1px solid var(--rule);
+  transition: transform 0.4s var(--ease);
+}
+.collar-in {
+  max-width: var(--sheet); margin-inline: auto;
+  padding: 0.65rem var(--gutter);
+  display: flex; align-items: center; gap: 1.5rem;
+}
+.mark { display: flex; flex-direction: column; justify-content: center; line-height: 1;
+  text-decoration: none; min-height: 44px; padding: 0.25rem 0; }
+.mark b {
+  font-family: var(--ui); font-weight: 700; font-size: 1.02rem;
+  letter-spacing: 0.16em; font-stretch: 90%;
+}
+.mark span {
+  font-family: var(--doc); font-size: 0.6875rem; letter-spacing: 0.13em;
+  color: var(--ink-3); margin-top: 0.22rem; text-transform: uppercase;
+}
+.collar nav { margin-left: auto; display: flex; align-items: center; gap: 1.6rem; }
+.collar nav a {
+  font-family: var(--ui); font-size: 0.78rem; font-weight: 550;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; color: var(--ink-2);
+  padding: 0.8rem 0; min-height: 44px; display: inline-flex; align-items: center; position: relative;
+}
+.collar nav a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: var(--stamp);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.collar nav a:hover::after, .collar nav a:focus-visible::after { transform: scaleX(1); }
+
+.call {
+  font-family: var(--doc); font-weight: 700; font-size: 0.82rem;
+  letter-spacing: 0.02em; text-decoration: none;
+  background: var(--ink); color: var(--paper-lift);
+  padding: 0.75rem 1rem; min-height: 44px; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: background 0.2s var(--ease);
+}
+.call:hover { background: var(--stamp); }
+.call svg { width: 13px; height: 13px; flex: none; }
+
+.burger {
+  display: none; margin-left: auto; background: none; border: 1px solid var(--rule);
+  width: 44px; height: 44px; cursor: pointer; align-items: center; justify-content: center;
+}
+.burger svg { width: 18px; height: 18px; }
+
+/* ========================================================= THE CERTIFICATE */
+#certificate {
+  position: relative;
+  min-height: 100svh;
+  display: flex; align-items: center;
+  padding: 7.5rem var(--gutter) 4rem;
+  border-bottom: 1px solid var(--rule);
+  overflow: hidden;
+}
+.cert-in {
+  position: relative; z-index: 2;
+  max-width: var(--sheet); margin-inline: auto; width: 100%;
+}
+.cert-head { display: flex; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+.cert-head > div:first-child { flex: 1 1 30rem; }
+
+.cert-caption { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.6rem; }
+
+.display em {
+  font-style: normal;
+  color: var(--stamp);
+  /* Emphasis by ink, never by gradient. */
+}
+
+.cert-sub {
+  margin-top: 1.7rem;
+  max-width: 46ch;
+  font-size: clamp(1.02rem, 0.95rem + 0.3vw, 1.2rem);
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+.cert-sub strong { font-weight: 650; color: var(--ink); }
+
+/* The summary: typed onto the form, not a stat strip. */
+.summary {
+  margin-top: 2.2rem;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.85rem 0;
+  display: flex; flex-wrap: wrap; gap: 0.4rem 2.2rem;
+  font-family: var(--doc); font-size: 0.8rem; letter-spacing: 0.04em;
+  color: var(--ink-2);
+}
+.summary b { color: var(--ink); font-weight: 700; }
+.summary i { font-style: normal; color: var(--stamp); font-weight: 700; }
+
+.cert-act { margin-top: 2.4rem; display: flex; flex-wrap: wrap; gap: 0.9rem; align-items: center; }
+
+/* --------------------------------------------------------------- buttons -- */
+.btn {
+  --bg: var(--ink); --fg: var(--paper-lift); --bd: var(--ink);
+  display: inline-flex; align-items: center; gap: 0.65rem;
+  background: var(--bg); color: var(--fg); border: 1px solid var(--bd);
+  font-family: var(--ui); font-weight: 600; font-size: 0.82rem;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  padding: 0.95rem 1.5rem; min-height: 48px;
+  text-decoration: none; cursor: pointer;
+  transition: background 0.22s var(--ease), color 0.22s var(--ease),
+              border-color 0.22s var(--ease), transform 0.22s var(--ease);
+}
+.btn:hover { --bg: var(--stamp); --bd: var(--stamp); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn svg { width: 15px; height: 15px; flex: none; }
+.btn-ghost { --bg: transparent; --fg: var(--ink); --bd: var(--ink); }
+.btn-ghost:hover { --bg: var(--ink); --fg: var(--paper-lift); --bd: var(--ink); }
+
+/* ------------------------------------------------- the recording stamp --- */
+.stamp-slot {
+  flex: 0 0 auto; width: clamp(150px, 20vw, 216px); aspect-ratio: 1;
+  position: relative; margin-left: auto;
+}
+.stamp-slot canvas { width: 100%; height: 100%; display: block; }
+/* Fallback / no-JS / reduced-motion rendering of the same mark. */
+.stamp-static {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; text-align: center;
+  border: 2px solid var(--stamp); color: var(--stamp);
+  font-family: var(--doc); font-size: 0.56rem; letter-spacing: 0.14em;
+  line-height: 1.7; text-transform: uppercase; padding: 1rem;
+  transform: rotate(-7deg);
+}
+.stamp-static b { display: block; font-size: 0.78rem; letter-spacing: 0.1em; }
+.stamp-slot[data-live="1"] .stamp-static { display: none; }
+
+/* ================================================ THE SCHEDULE OF INSTRUMENTS */
+.band { padding: var(--cut) var(--gutter); }
+.band-in { max-width: var(--sheet); margin-inline: auto; }
+
+.band-head { margin-bottom: 3rem; }
+.band-head .h2 { margin-top: 0.7rem; }
+.band-head .prose { margin-top: 1.1rem; }
+
+/* Filter + sort — controls in the document's own language. */
+.controls {
+  margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem 0.4rem;
+  align-items: center; border-top: 1px solid var(--rule); padding-top: 1rem;
+}
+.controls .caption { margin-right: 0.5rem; }
+.chip {
+  background: transparent; border: 1px solid var(--rule); color: var(--ink-2);
+  font-family: var(--doc); font-size: 0.74rem; letter-spacing: 0.06em;
+  padding: 0.6rem 0.9rem; min-height: 44px; cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.chip:hover { border-color: var(--ink); color: var(--ink); }
+.chip[aria-pressed="true"], .chip.on {
+  background: var(--ink); border-color: var(--ink); color: var(--paper-lift);
+}
+.controls .spacer { margin-left: auto; }
+
+/* ---- the instrument row ---- */
+.schedule { margin-top: 2.5rem; border-top: 2px solid var(--ink); }
+
+.inst {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) minmax(0, 15rem) 11rem;
+  gap: 1.5rem;
+  align-items: start;
+  padding: 1.75rem 0.75rem 1.75rem 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  width: 100%; text-align: left;
+  background: transparent; border-left: 0; border-right: 0; border-top: 0;
+  cursor: pointer;
+  transition: background 0.24s var(--ease);
+}
+.inst:hover, .inst:focus-visible { background: var(--paper-lift); }
+.inst::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--stamp); transform: scaleY(0); transform-origin: top;
+  transition: transform 0.3s var(--ease);
+}
+.inst:hover::before, .inst:focus-visible::before { transform: scaleY(1); }
+
+.inst-no {
+  font-family: var(--doc); font-size: 0.78rem; color: var(--ink-3);
+  letter-spacing: 0.04em; padding-top: 0.2rem;
+}
+.inst-no b { display: block; color: var(--ink); font-size: 1.05rem; font-weight: 700; }
+
+.inst-main { min-width: 0; }
+.inst-title {
+  font-family: var(--ui); font-weight: 650;
+  font-size: clamp(1.05rem, 0.98rem + 0.4vw, 1.3rem);
+  letter-spacing: -0.017em; line-height: 1.2;
+}
+.inst-meta {
+  margin-top: 0.4rem; font-family: var(--doc); font-size: 0.74rem;
+  color: var(--ink-3); letter-spacing: 0.04em;
+  display: flex; flex-wrap: wrap; gap: 0.3rem 1rem;
+}
+.inst-meta span { white-space: nowrap; }
+
+/* The lot strip: one unbroken row that scales, never wraps. */
+.lots {
+  margin-top: 0.9rem; display: flex; gap: 3px; align-items: stretch;
+  max-width: 20rem;
+}
+.lot {
+  flex: 1 1 0; min-width: 0; height: 30px;
+  display: grid; place-content: center;
+  font-family: var(--doc); font-size: 0.68rem; font-weight: 700;
+  border: 1px solid var(--rule);
+  color: var(--ink-3); background: transparent;
+}
+.lot.open {
+  border-color: var(--stamp); color: var(--stamp);
+  background: var(--stamp-wash);
+}
+/* Conveyed lots stay fully legible — a buyer should see the property selling,
+   not find a blank. Ghost cells are designed, not faded out. */
+.lot.gone {
+  color: var(--ink-3); border-color: var(--rule);
+  background: rgba(20, 20, 15, 0.08); /* fallback */
+  background: repeating-linear-gradient(
+    -45deg, transparent 0 3px, color-mix(in srgb, var(--ink) 13%, transparent) 3px 4px);
+  text-decoration: line-through;
+  text-decoration-color: rgba(102, 97, 79, 0.70); /* fallback */
+  text-decoration-color: color-mix(in srgb, var(--ink-3) 70%, transparent);
+}
+
+.inst-plates { display: flex; gap: 4px; padding-top: 0.2rem; }
+.inst-plates img {
+  width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+  filter: grayscale(0.18) contrast(1.03);
+  transition: filter 0.3s var(--ease);
+}
+.inst:hover .inst-plates img { filter: grayscale(0) contrast(1.05); }
+.inst-plates .plate-more {
+  align-self: flex-end; font-family: var(--doc); font-size: 0.64rem;
+  color: var(--ink-3); padding-bottom: 0.15rem; white-space: nowrap;
+}
+.no-plate {
+  aspect-ratio: 4 / 3; width: 100%;
+  border: 1px solid var(--rule);
+  display: grid; place-content: center; gap: 0.3rem; text-align: center;
+  background: rgba(233, 231, 225, 1.00); /* fallback */
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 7px,
+      color-mix(in srgb, var(--rule-hair) 40%, transparent) 7px 8px);
+  font-family: var(--doc); font-size: 0.58rem; letter-spacing: 0.1em;
+  color: var(--ink-3); text-transform: uppercase; padding: 0.5rem;
+}
+.no-plate svg { width: 20px; height: 20px; margin-inline: auto; color: var(--rule); }
+
+.inst-terms { text-align: right; }
+.inst-price {
+  font-family: var(--ui); font-weight: 700;
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+  letter-spacing: -0.028em; line-height: 1;
+}
+.inst-sub {
+  margin-top: 0.45rem; font-family: var(--doc); font-size: 0.72rem;
+  color: var(--ink-2); letter-spacing: 0.03em;
+}
+.mark-status {
+  margin-top: 0.85rem; display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--doc); font-size: 0.63rem; font-weight: 700;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  border: 1.5px solid currentColor; padding: 0.3rem 0.5rem;
+  transform: rotate(-1.6deg);
+}
+.mark-status.open   { color: var(--stamp); }
+.mark-status.part   { color: var(--green); }
+.mark-status.closed { color: var(--ink-3); border-style: double; border-width: 3px; }
+
+/* ---- tipped-in exhibit plate: the emotional payoff between instruments ---- */
+.exhibit {
+  position: relative; margin: var(--cut) 0;
+  border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  background: var(--ink);
+}
+.exhibit img {
+  aspect-ratio: 16 / 9;
+  width: 100%; height: clamp(320px, 52vh, 620px); object-fit: cover;
+  opacity: 0.93;
+}
+.exhibit figcaption {
+  position: absolute; left: 0; bottom: 0;
+  background: var(--paper); border-top: 1px solid var(--ink); border-right: 1px solid var(--ink);
+  padding: 0.7rem 1.2rem;
+  font-family: var(--doc); font-size: 0.68rem; letter-spacing: 0.11em;
+  color: var(--ink-2);
+}
+.exhibit figcaption b { color: var(--ink); text-transform: uppercase; letter-spacing: .14em; }
+
+/* ================================================================ COVENANTS */
+.covenants { counter-reset: cov; display: grid; gap: 0; margin-top: 2.5rem; border-top: 2px solid var(--ink); }
+.cov {
+  counter-increment: cov;
+  display: grid; grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 1.5rem; padding: 1.6rem 0.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+.cov::before {
+  content: counter(cov, decimal-leading-zero);
+  font-family: var(--doc); font-size: 0.95rem; font-weight: 700;
+  color: var(--stamp); letter-spacing: 0.02em;
+}
+.cov h3 { font-family: var(--ui); font-weight: 650; font-size: 1.08rem; letter-spacing: -0.015em; }
+.cov p { margin-top: 0.4rem; color: var(--ink-2); max-width: 58ch; }
+
+/* ================================================================== ASSURANCE */
+.assure { display: grid; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 2.5rem; }
+@media (min-width: 720px) { .assure { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1040px) { .assure { grid-template-columns: repeat(4, 1fr); } }
+.assure > div { background: var(--paper); padding: 1.6rem 1.4rem; }
+.assure dt {
+  font-family: var(--doc); font-size: 0.64rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.assure dd {
+  margin-top: 0.6rem; font-family: var(--ui); font-weight: 650;
+  font-size: 1.02rem; line-height: 1.35; letter-spacing: -0.014em;
+}
+.assure dd small {
+  display: block; margin-top: 0.4rem; font-family: var(--doc);
+  font-size: 0.72rem; font-weight: 400; color: var(--ink-2); letter-spacing: 0.02em;
+}
+
+/* ======================================================== EXAMINATION (FAQ) */
+.faq { margin-top: 2.5rem; border-top: 2px solid var(--ink); }
+.faq details { border-bottom: 1px solid var(--rule); }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 1.35rem 3rem 1.35rem 0.5rem;
+  position: relative; font-family: var(--ui); font-weight: 600;
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.13rem); letter-spacing: -0.015em;
+  min-height: 48px; display: flex; align-items: center;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--stamp); }
+.faq summary::after {
+  content: ""; position: absolute; right: 0.75rem; top: 50%;
+  width: 13px; height: 13px; margin-top: -6px;
+  background: currentColor;
+  clip-path: polygon(46% 0, 54% 0, 54% 46%, 100% 46%, 100% 54%, 54% 54%, 54% 100%, 46% 100%, 46% 54%, 0 54%, 0 46%, 46% 46%);
+  transition: transform 0.28s var(--ease);
+}
+.faq details[open] summary::after { transform: rotate(135deg); }
+.faq .ans { padding: 0 3rem 1.5rem 0.5rem; color: var(--ink-2); max-width: 66ch; }
+
+/* ================================================================ INSTRUMENT */
+/* Full-page sheet: opening a document out of the abstract. */
+.sheet {
+  position: fixed; inset: 0; z-index: 120;
+  background: var(--paper);
+  overflow-y: auto; overscroll-behavior: contain;
+  opacity: 0; visibility: hidden;
+  /* visibility must flip INSTANTLY on open, delayed only on close. Transitioning
+     it means the element is still `hidden` in the same task that sets
+     aria-hidden="false" — and a hidden element cannot take focus, which
+     silently breaks the focus trap. */
+  transition: opacity 0.32s var(--ease), visibility 0s linear 0.32s;
+}
+.sheet[aria-hidden="false"] {
+  opacity: 1; visibility: visible;
+  transition: opacity 0.32s var(--ease), visibility 0s linear 0s;
+}
+.sheet-bar {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.75rem var(--gutter);
+  background: rgba(233, 231, 225, 0.94); /* fallback */
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  border-bottom: 1px solid var(--ink);
+}
+.sheet-bar .caption { margin-right: auto; }
+.icon-btn {
+  width: 46px; height: 46px; display: grid; place-content: center;
+  background: transparent; border: 1px solid var(--rule); cursor: pointer;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease), border-color 0.2s var(--ease), transform 0.2s var(--ease), opacity 0.2s var(--ease);
+}
+.icon-btn:hover { background: var(--ink); color: var(--paper-lift); border-color: var(--ink); }
+.icon-btn svg { width: 17px; height: 17px; }
+
+.sheet-body { max-width: var(--sheet); margin-inline: auto; padding: 2.5rem var(--gutter) 5rem; }
+
+.sheet-grid { display: grid; gap: 2.5rem; }
+@media (min-width: 940px) { .sheet-grid { grid-template-columns: 1.35fr 1fr; gap: 3.5rem; } }
+
+.gal { position: relative; background: var(--ink); border: 1px solid var(--ink); }
+.gal img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.gal-nav {
+  position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between;
+  padding: 0.6rem; gap: 0.5rem;
+}
+.gal-nav button {
+  width: 44px; height: 44px; display: grid; place-content: center;
+  background: rgba(233, 231, 225, 0.90); /* fallback */
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  border: 1px solid var(--ink); cursor: pointer;
+  transition: background 0.2s var(--ease);
+}
+.gal-nav button:hover { background: var(--paper); }
+.gal-nav svg { width: 15px; height: 15px; }
+.gal-count {
+  align-self: center; font-family: var(--doc); font-size: 0.68rem;
+  background: var(--paper); border: 1px solid var(--ink); padding: 0.3rem 0.6rem;
+  letter-spacing: 0.06em;
+}
+
+/* Terms block — labelled segments with tabular figures. */
+.terms { border-top: 2px solid var(--ink); }
+.term {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  padding: 0.8rem 0.25rem; border-bottom: 1px solid var(--rule);
+}
+.term dt {
+  font-family: var(--doc); font-size: 0.68rem; letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.term dd {
+  font-family: var(--ui); font-weight: 650; font-size: 1.02rem;
+  letter-spacing: -0.015em; text-align: right;
+}
+.term dd.big { font-size: 1.5rem; letter-spacing: -0.03em; }
+.term dd.accent { color: var(--stamp); }
+
+.plat { margin-top: 2rem; }
+.plat-grid { display: flex; gap: 4px; margin-top: 0.8rem; }
+.plat-lot {
+  flex: 1 1 0; aspect-ratio: 3 / 4; border: 1px solid var(--rule);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem;
+  font-family: var(--doc); font-size: 0.9rem; font-weight: 700; color: var(--ink-3);
+}
+.plat-lot small { font-size: 0.52rem; letter-spacing: 0.1em; font-weight: 400; }
+.plat-lot.open { border-color: var(--stamp); color: var(--stamp); background: var(--stamp-wash); }
+.plat-lot.gone {
+  color: var(--ink-3); border-color: var(--rule);
+  background: rgba(20, 20, 15, 0.08); /* fallback */
+  background: repeating-linear-gradient(-45deg, transparent 0 4px,
+    color-mix(in srgb, var(--ink) 12%, transparent) 4px 5px);
+}
+.plat-lot.gone small { color: var(--ink-3); }
+
+.list-doc { margin-top: 0.9rem; display: grid; gap: 0.55rem; }
+.list-doc li { display: flex; gap: 0.7rem; align-items: flex-start; color: var(--ink-2); }
+.list-doc li svg { width: 15px; height: 15px; flex: none; margin-top: 0.28rem; color: var(--green); }
+.route { counter-reset: step; margin-top: 0.9rem; display: grid; gap: 0.55rem; }
+.route li {
+  counter-increment: step; display: grid; grid-template-columns: 1.9rem 1fr;
+  gap: 0.6rem; color: var(--ink-2);
+}
+.route li::before {
+  content: counter(step); font-family: var(--doc); font-size: 0.7rem; font-weight: 700;
+  color: var(--stamp); padding-top: 0.15rem;
+}
+
+/* ===================================================================== FORM */
+#inquiry { background: var(--ink); color: var(--paper); border-top: 3px solid var(--ink); }
+#inquiry .caption { color: rgba(233, 231, 225, 0.60); color: color-mix(in srgb, var(--paper) 60%, transparent); }
+#inquiry .h2 { color: var(--paper-lift); }
+#inquiry .prose { color: rgba(233, 231, 225, 0.80); color: color-mix(in srgb, var(--paper) 80%, transparent); }
+/* Grid and flex items default to min-width:auto, so the widest <option> in the
+   property select (a full property title plus price) set a ~428px floor that
+   propagated up and pushed half the contact column off a 360px screen. */
+.form-wrap { display: grid; gap: 2.5rem; margin-top: 2.5rem; }
+.form-wrap > *, .contact-row, .contact-row > div, #form, .field, .two > * { min-width: 0; }
+.field input, .field select, .field textarea { min-width: 0; max-width: 100%; }
+.contact-row dd, .contact-row dd a { overflow-wrap: anywhere; }
+.contact-row dd > a,
+#teamList a { min-height: 44px; display: inline-flex; align-items: center; }
+#teamList > div { min-height: 44px; }
+.icon-btn, .burger { flex: none; }
+@media (min-width: 940px) { .form-wrap { grid-template-columns: 1fr 1.1fr; gap: 4rem; } }
+
+.contact-row { display: grid; gap: 1.4rem; }
+.contact-row a { color: var(--paper-lift); }
+.contact-row dt {
+  font-family: var(--doc); font-size: 0.64rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(233, 231, 225, 0.55); /* fallback */
+  text-transform: uppercase; color: color-mix(in srgb, var(--paper) 55%, transparent);
+}
+.contact-row dd { margin-top: 0.35rem; font-size: 1.05rem; }
+.contact-row dd.phone {
+  font-family: var(--ui); font-weight: 700; font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.1rem);
+  letter-spacing: -0.03em;
+}
+
+form { display: grid; gap: 1.1rem; }
+.field { display: grid; gap: 0.4rem; }
+.field label {
+  font-family: var(--doc); font-size: 0.66rem; letter-spacing: 0.13em;
+  text-transform: uppercase; color: rgba(233, 231, 225, 0.62); /* fallback */
+  text-transform: uppercase; color: color-mix(in srgb, var(--paper) 62%, transparent);
+}
+.field input, .field select, .field textarea {
+  background: transparent; color: var(--paper-lift);
+  border: 0; border-bottom: 1px solid rgba(233, 231, 225, 0.34); /* fallback */
+  border: 0; border-bottom: 1px solid color-mix(in srgb, var(--paper) 34%, transparent);
+  padding: 0.7rem 0.15rem; min-height: 48px;
+  font-family: var(--ui); font-size: 1rem;
+  transition: border-color 0.2s var(--ease);
+}
+.field textarea { min-height: 116px; resize: vertical; line-height: 1.55; }
+.field input::placeholder, .field textarea::placeholder {
+  color: rgba(233, 231, 225, 0.66); /* fallback */
+  color: color-mix(in srgb, var(--paper) 66%, transparent);
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-bottom-color: var(--stamp);
+}
+.field select option { background: var(--ink); color: var(--paper-lift); }
+.two { display: grid; gap: 1.1rem; }
+@media (min-width: 560px) { .two { grid-template-columns: 1fr 1fr; } }
+
+.submit {
+  margin-top: 0.6rem; background: var(--paper-lift); color: var(--ink);
+  border: 1px solid var(--paper-lift);
+}
+.submit:hover { background: var(--stamp); border-color: var(--stamp); color: var(--paper-lift); }
+.submit[disabled] { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.form-note {
+  font-family: var(--doc); font-size: 0.7rem; line-height: 1.6;
+  color: rgba(233, 231, 225, 0.55); /* fallback */
+  color: color-mix(in srgb, var(--paper) 55%, transparent);
+}
+.form-msg {
+  border: 1px solid var(--stamp); color: var(--paper-lift);
+  background: rgba(140, 47, 40, 0.22); /* fallback */
+  background: color-mix(in srgb, var(--stamp) 22%, transparent);
+  padding: 0.85rem 1rem; font-family: var(--doc); font-size: 0.78rem;
+}
+.form-msg.ok { border-color: var(--green); background: rgba(47, 93, 74, 0.26); background: color-mix(in srgb, var(--green) 26%, transparent); }
+
+/* =================================================================== FOOTER */
+footer { background: var(--ink); color: rgba(233, 231, 225, 0.66); color: color-mix(in srgb, var(--paper) 66%, transparent); }
+.foot-in {
+  max-width: var(--sheet); margin-inline: auto; padding: 3rem var(--gutter);
+  border-top: 1px solid rgba(233, 231, 225, 0.18); /* fallback */
+  border-top: 1px solid color-mix(in srgb, var(--paper) 18%, transparent);
+  display: grid; gap: 2rem;
+}
+@media (min-width: 860px) { .foot-in { grid-template-columns: 1.4fr 1fr 1fr; } }
+footer a { color: var(--paper-lift); }
+footer .mark b { color: var(--paper-lift); }
+footer .mark span { color: rgba(233, 231, 225, 0.50); color: color-mix(in srgb, var(--paper) 50%, transparent); }
+.foot-col h4 {
+  font-family: var(--doc); font-size: 0.64rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(233, 231, 225, 0.50); /* fallback */
+  text-transform: uppercase; color: color-mix(in srgb, var(--paper) 50%, transparent);
+  margin-bottom: 0.8rem;
+}
+.foot-col ul { list-style: none; display: grid; gap: 0.1rem; }
+.foot-col li { display: flex; }
+.foot-col ul a { padding: 0.45rem 0; min-height: 32px; display: inline-flex; align-items: center; }
+.foot-col a { text-decoration: none; }
+.foot-col a:hover { text-decoration: underline; }
+.colophon {
+  max-width: var(--sheet); margin-inline: auto; padding: 1.25rem var(--gutter) 2.5rem;
+  font-family: var(--doc); font-size: 0.66rem; line-height: 1.7;
+  color: rgba(233, 231, 225, 0.66); /* fallback */
+  color: color-mix(in srgb, var(--paper) 66%, transparent);
+  display: flex; flex-wrap: wrap; gap: 0.4rem 1.5rem;
+}
+
+/* ================================================================== MOBILE */
+.mobile {
+  position: fixed; inset: 0; z-index: 130; background: var(--paper);
+  padding: 5rem var(--gutter) 2rem; display: grid; align-content: start; gap: 0.25rem;
+  overflow-y: auto; overscroll-behavior: contain;
+  transform: translateY(-100%);
+  /* Hidden off-screen is not hidden: without visibility these controls stay in
+     the tab order and in the accessibility tree, at every breakpoint. */
+  visibility: hidden;
+  transition: transform 0.4s var(--ease), visibility 0s linear 0.4s;
+}
+.mobile[data-open="1"] {
+  transform: translateY(0); visibility: visible;
+  transition: transform 0.4s var(--ease), visibility 0s linear 0s;
+}
+@media (min-width: 901px) { .mobile { display: none; } }
+.mobile a {
+  font-family: var(--ui); font-weight: 650; font-size: 1.6rem; letter-spacing: -0.025em;
+  text-decoration: none; padding: 0.75rem 0; border-bottom: 1px solid var(--rule);
+  min-height: 48px; display: flex; align-items: center;
+}
+.mobile .call { margin-top: 1.5rem; justify-content: center; font-size: 1rem; padding: 1rem; }
+.mobile .icon-btn { position: absolute; top: 1rem; right: var(--gutter); }
+
+/* ==================================================================== PHONE ==
+   On a phone the instrument does not collapse into a card. It unrolls as three
+   synchronised bands — plate, identity, terms — so each entry still reads as a
+   recorded page rather than a listing tile.                                   */
+@media (max-width: 900px) {
+  .collar nav { display: none; }
+  .burger { display: flex; }
+  .collar-in { padding-block: 0.5rem; gap: 0.75rem; }
+  .collar .call { padding: 0.7rem 0.85rem; }
+
+  /* ---- the certificate: the stamp lands ON the document, not beside it ---- */
+  #certificate { padding-top: 6rem; padding-bottom: 3rem; min-height: 0; }
+  .cert-head { display: block; position: relative; }
+  .display { font-size: clamp(2.9rem, 12.5vw, 4.2rem); line-height: 0.9; }
+  .cert-sub { font-size: 1.05rem; max-width: 34ch; }
+  .summary {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 1px solid var(--ink); border-bottom-width: 1px; padding: 0;
+    margin-top: 2rem;
+  }
+  .summary span {
+    padding: 0.7rem 0.85rem; border-bottom: 1px solid var(--rule-soft);
+    display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem;
+  }
+  .summary span:nth-child(odd) { border-right: 1px solid var(--rule-soft); }
+  .summary span:last-child:nth-child(odd) { grid-column: 1 / -1; border-right: 0; }
+  .summary span:nth-last-child(-n+2) { border-bottom: 0; }
+  .cert-act { flex-direction: column; align-items: stretch; gap: 0.6rem; }
+  .cert-act .btn { justify-content: center; }
+
+  /* the stamp overlaps the type, rotated, as though pressed onto the sheet */
+  .stamp-slot {
+    position: absolute; right: -0.75rem; top: -1.5rem;
+    width: clamp(104px, 31vw, 150px); margin: 0; z-index: 3;
+    opacity: 0.92; pointer-events: none;
+  }
+
+  /* ------------------------------- the instrument, as three bands ---------- */
+  .schedule { border-top-width: 3px; }
+  .inst {
+    display: block; padding: 0; border-bottom-width: 2px;
+    padding-bottom: 1.5rem; margin-bottom: 0.25rem;
+  }
+  .inst::before { display: none; }
+  .inst:hover, .inst:focus-visible { background: transparent; }
+
+  /* band 1 — the plate, edge to edge */
+  .inst-plates {
+    display: block; position: relative; margin: 0 calc(var(--gutter) * -1) 1rem;
+    padding: 0; border-block: 1px solid var(--rule);
+  }
+  .inst-plates img {
+    width: 100%; aspect-ratio: 16 / 9; filter: grayscale(0.1) contrast(1.04);
+  }
+  .inst-plates img:nth-child(2) { display: none; }
+  .inst-plates .plate-more {
+    position: absolute; right: 0; bottom: 0; padding: 0.4rem 0.7rem;
+    background: var(--paper); border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink); font-size: 0.66rem;
+  }
+  .inst-plates .no-plate { aspect-ratio: 16 / 9; border: 0; }
+
+  /* band 2 — identity */
+  .inst-no {
+    display: flex; align-items: baseline; gap: 0.5rem; padding: 0 0 0.5rem;
+    font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  }
+  .inst-no b { display: inline; font-size: 0.86rem; }
+  .inst-title { font-size: 1.32rem; line-height: 1.15; }
+  .inst-meta { font-size: 0.71rem; gap: 0.15rem 0.8rem; }
+  .lots { max-width: none; margin-top: 1rem; }
+  .lot { height: 36px; font-size: 0.78rem; }
+
+  /* band 3 — the terms rail, ruled off like a footing */
+  .inst-terms {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1rem; margin-top: 1.1rem; padding-top: 0.9rem;
+    border-top: 1px solid var(--ink); text-align: left;
+  }
+  .inst-price { font-size: 1.72rem; }
+  .inst-sub { font-size: 0.74rem; margin-top: 0.3rem; }
+  .inst-terms > div:first-child { min-width: 0; }
+  .mark-status { margin-top: 0; flex: none; font-size: 0.6rem; }
+
+  /* ------------------------------------------------ the sheet on a phone --- */
+  .sheet-body { padding-top: 1.5rem; }
+  .sheet-grid { gap: 2rem; }
+  .gal { margin: 0 calc(var(--gutter) * -1); border-inline: 0; }
+  .gal img { aspect-ratio: 4 / 3; }
+  .terms { border-top-width: 3px; }
+  .term dd.big { font-size: 1.9rem; }
+  .exhibit img { height: clamp(240px, 42vh, 360px); }
+
+  /* covenants read as a numbered list, not a two-column grid */
+  .cov { grid-template-columns: 2.6rem minmax(0, 1fr); gap: 0.9rem; padding: 1.3rem 0; }
+
+  /* ------------------------------------------- the standing call bar ------- */
+  /* The buyer is often outdoors with the phone in one hand. The number never
+     leaves the screen once they are past the certificate. */
+  .callbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 100;
+    display: grid; grid-template-columns: 1fr auto;
+    background: var(--ink); color: var(--paper-lift);
+    border-top: 2px solid var(--stamp);
+    padding: 0.6rem 0.9rem calc(0.6rem + env(safe-area-inset-bottom));
+    transform: translateY(110%); visibility: hidden;
+    transition: transform 0.42s var(--ease), visibility 0s linear 0.42s;
+    align-items: center; gap: 0.8rem;
+  }
+  .callbar[data-show="1"] {
+    transform: translateY(0); visibility: visible;
+    transition: transform 0.42s var(--ease), visibility 0s linear 0s;
+  }
+  .callbar dt {
+    font-family: var(--doc); font-size: 0.6rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: rgba(233, 231, 225, 0.60); /* fallback */
+    text-transform: uppercase; color: color-mix(in srgb, var(--paper) 60%, transparent);
+  }
+  .callbar dd {
+    font-family: var(--ui); font-weight: 700; font-size: 1.02rem;
+    letter-spacing: -0.02em; margin-top: 0.1rem;
+  }
+  .callbar a {
+    background: var(--stamp); color: var(--paper-lift); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.8rem 1.15rem; min-height: 48px;
+    font-family: var(--ui); font-weight: 650; font-size: 0.82rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .callbar a svg { width: 16px; height: 16px; }
+  body { padding-bottom: 0; }
+  footer { padding-bottom: 4.5rem; }
+}
+
+@media (min-width: 901px) { .callbar { display: none; } }
+
+/* ========================================================== REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* Nothing may be left hidden by a cancelled animation. */
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+
+@media print {
+  .collar, .mobile, .stamp-slot, #inquiry form { display: none; }
+  body { background: #fff; color: #000; }
+  .inst { break-inside: avoid; }
+}
