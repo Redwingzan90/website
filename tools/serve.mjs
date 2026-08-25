@@ -4,7 +4,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
 
-const ROOT = process.cwd()
+// Serve the publish directory, not the repository root - so what you preview
+// locally is exactly what Netlify serves, and a file outside site/ is as
+// unreachable here as it is in production.
+const ROOT = path.join(process.cwd(), 'site')
 const PORT = Number(process.argv[2] || 4321)
 
 const TYPES = {

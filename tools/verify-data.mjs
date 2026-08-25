@@ -14,10 +14,10 @@ import fs from 'node:fs'
 import crypto from 'node:crypto'
 import vm from 'node:vm'
 
-const snap = JSON.parse(fs.readFileSync('data.snapshot.json', 'utf8'))
+const snap = JSON.parse(fs.readFileSync('data/data.snapshot.json', 'utf8'))
 const ctx = { window: {} }
 vm.createContext(ctx)
-vm.runInContext(fs.readFileSync('assets/data.js', 'utf8'), ctx)
+vm.runInContext(fs.readFileSync('site/assets/data.js', 'utf8'), ctx)
 const live = ctx.window.KORR_DATA
 
 const problems = []
@@ -33,7 +33,10 @@ if (live.properties.length !== snap.properties.length) {
   problems.push(`property count ${live.properties.length} != ${snap.properties.length}`)
 }
 
-const fileFor = (b) => /\.(webp|png|jpe?g)$/i.test(b) ? b : `${b}-640.webp`
+// Image paths in data.js are web paths ("images/..."), and site/ is the web
+// root, so every one of them resolves against site/ rather than the repo root.
+const WEB_ROOT = 'site/'
+const fileFor = (b) => WEB_ROOT + (/\.(webp|png|jpe?g)$/i.test(b) ? b : `${b}-640.webp`)
 const sha = (f) => { try { return crypto.createHash('sha1').update(fs.readFileSync(f)).digest('hex') } catch { return null } }
 
 for (const before of snap.properties) {
@@ -133,12 +136,12 @@ for (const p of live.properties) {
 let checked = 0; const broken = []
 for (const p of live.properties) for (const img of p.images || []) {
   const cands = /\.(webp|png|jpe?g)$/i.test(img) ? [img] : [`${img}-640.webp`, `${img}-1280.webp`]
-  for (const c of cands) { checked++; if (!fs.existsSync(c)) broken.push(c) }
+  for (const c of cands) { checked++; if (!fs.existsSync(WEB_ROOT + c)) broken.push(c) }
 }
 if (broken.length) problems.push(`${broken.length} broken image paths:\n      ` + broken.slice(0, 8).join('\n      '))
 
 /* ---- contacts + testimonials ---- */
-const shipped = ['index.html', 'assets/data.js', 'assets/korr.js']
+const shipped = ['site/index.html', 'site/assets/data.js', 'site/assets/korr.js']
   .filter(f => fs.existsSync(f)).map(f => fs.readFileSync(f, 'utf8')).join('\n')
 const digits = (s) => s.replace(/[^0-9]/g, '')
 const REQUIRED = ['480-453-4044', '701-500-5906', '(432) 308-2481', '602-525-5688', '(806) 752-0022']

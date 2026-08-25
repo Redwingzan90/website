@@ -13,8 +13,8 @@
 import fs from 'node:fs'
 import crypto from 'node:crypto'
 
-const snap = JSON.parse(fs.readFileSync('data.snapshot.json', 'utf8'))
-const newPhotos = JSON.parse(fs.readFileSync('_new-photos.json', 'utf8'))
+const snap = JSON.parse(fs.readFileSync('data/data.snapshot.json', 'utf8'))
+const newPhotos = JSON.parse(fs.readFileSync('data/new-photos.json', 'utf8'))
 
 const PHOTO_TARGET = { 4: 'property4', 10: '487th-north', 5: 'property5' }
 
@@ -169,7 +169,7 @@ const banner = `/* KORR Building Co — property data.
  *     node _build-data.mjs && node _verify-data.mjs
  */\n`
 
-fs.writeFileSync('assets/data.js', banner + 'window.KORR_DATA = ' + JSON.stringify(data, null, 2) + ';\n')
+fs.writeFileSync('site/assets/data.js', banner + 'window.KORR_DATA = ' + JSON.stringify(data, null, 2) + ';\n')
 
 console.log('TRANSFORMS APPLIED')
 console.log(log.length ? log.join('\n') : '  (none)')

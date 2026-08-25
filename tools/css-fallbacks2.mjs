@@ -3,7 +3,7 @@
 // immediately before the color-mix() version.
 import fs from 'node:fs'
 
-const FILE = 'assets/korr.css'
+const FILE = 'site/assets/korr.css'
 let src = fs.readFileSync(FILE, 'utf8')
 
 const RGB = {

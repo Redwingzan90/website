@@ -1,7 +1,7 @@
 // One-off: pull the data structures out of the original index.html verbatim.
 import fs from 'node:fs'
 
-const html = fs.readFileSync('index.original.backup.html', 'utf8')
+const html = fs.readFileSync('archive/index.original.backup.html', 'utf8')
 
 function grabArray (name) {
   const i = html.indexOf(`const ${name} = [`)
@@ -45,7 +45,7 @@ const out = {
   maps: eval('(' + grabObject('maps') + ')'),
 }
 
-fs.writeFileSync('data.snapshot.json', JSON.stringify(out, null, 2))
+fs.writeFileSync('data/data.snapshot.json', JSON.stringify(out, null, 2))
 
 console.log('properties:', out.properties.length,
   '| faqs:', out.faqs.length,

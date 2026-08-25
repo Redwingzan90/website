@@ -57,5 +57,5 @@ for (const { folder, dest, note } of MAP) {
   console.log(`[${dest.padEnd(13)}] +${bases.length} photos → ${(bytes / 1024).toFixed(0)} KB of webp   (${note})`)
 }
 
-fs.writeFileSync('_new-photos.json', JSON.stringify(added, null, 2))
+fs.writeFileSync('data/new-photos.json', JSON.stringify(added, null, 2))
 console.log('\nwrote _new-photos.json')

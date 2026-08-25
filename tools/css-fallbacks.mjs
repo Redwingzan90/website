@@ -7,7 +7,7 @@
 // Idempotent: re-running will not double up.
 import fs from 'node:fs'
 
-const FILE = 'assets/korr.css'
+const FILE = 'site/assets/korr.css'
 const src = fs.readFileSync(FILE, 'utf8')
 
 const VARS = {
