@@ -45,7 +45,8 @@ const sha = (f) => {
   try { return crypto.createHash('sha1').update(fs.readFileSync(f)).digest('hex') }
   catch { return null }
 }
-const fileFor = (base) => /\.(webp|png|jpe?g)$/i.test(base) ? base : `${base}-640.webp`
+// Image paths are web paths and site/ is the web root (same rule as verify-data.mjs)
+const fileFor = (base) => 'site/' + (/\.(webp|png|jpe?g)$/i.test(base) ? base : `${base}-640.webp`)
 
 // hash -> [{id, base}]
 const seen = new Map()

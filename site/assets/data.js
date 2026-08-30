@@ -224,9 +224,7 @@ window.KORR_DATA = {
         },
         {
           "id": "C",
-          "status": "available",
-          "price": "$35,000",
-          "terms": "cash"
+          "status": "sold"
         },
         {
           "id": "D",
@@ -248,7 +246,7 @@ window.KORR_DATA = {
       ],
       "highlights": [
         "$2,000 Down / $650 Monthly",
-        "2 of 5 lots available",
+        "1 of 5 lots available",
         "Directional signs posted on roadway",
         "Just minutes from I-10 freeway"
       ],
@@ -581,6 +579,44 @@ window.KORR_DATA = {
       ],
       "deedRestrictions": true,
       "special": "CLOSE TO ELECTRIC"
+    },
+    {
+      "id": 12,
+      "title": "Property #12 — 367th & Salome",
+      "location": "tonopah",
+      "locationLabel": "Tonopah, AZ",
+      "price": "Call for pricing",
+      "downPayment": "",
+      "monthly": "",
+      "interestRate": "",
+      "lots": [
+        {
+          "id": "A",
+          "status": "available"
+        },
+        {
+          "id": "B",
+          "status": "available"
+        },
+        {
+          "id": "C",
+          "status": "available"
+        },
+        {
+          "id": "D",
+          "status": "available"
+        },
+        {
+          "id": "E",
+          "status": "available"
+        }
+      ],
+      "highlights": [
+        "All Lots Available",
+        "Call 480-453-4044 for pricing and terms"
+      ],
+      "directions": [],
+      "images": []
     },
     {
       "id": 201,
