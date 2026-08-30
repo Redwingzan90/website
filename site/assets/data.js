@@ -585,9 +585,9 @@ window.KORR_DATA = {
       "title": "Property #12 — 367th & Salome",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
-      "price": "Call for pricing",
-      "downPayment": "",
-      "monthly": "",
+      "price": "$49,900",
+      "downPayment": "$700",
+      "monthly": "$700/mo",
       "interestRate": "",
       "lots": [
         {
@@ -613,7 +613,7 @@ window.KORR_DATA = {
       ],
       "highlights": [
         "All Lots Available",
-        "Call 480-453-4044 for pricing and terms"
+        "$700 Down / $700 Monthly"
       ],
       "directions": [],
       "images": []
