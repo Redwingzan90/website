@@ -588,7 +588,7 @@ window.KORR_DATA = {
       "price": "$49,900",
       "downPayment": "$700",
       "monthly": "$700/mo",
-      "interestRate": "",
+      "interestRate": "5%",
       "lots": [
         {
           "id": "A",
@@ -613,7 +613,8 @@ window.KORR_DATA = {
       ],
       "highlights": [
         "All Lots Available",
-        "$700 Down / $700 Monthly"
+        "$700 Down / $700 Monthly",
+        "5% Interest Rate, No Pre-payment Penalty"
       ],
       "directions": [],
       "images": []
