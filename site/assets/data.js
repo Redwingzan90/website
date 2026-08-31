@@ -521,7 +521,7 @@ window.KORR_DATA = {
         },
         {
           "id": "3",
-          "status": "sold"
+          "status": "available"
         }
       ],
       "images": [
@@ -532,7 +532,7 @@ window.KORR_DATA = {
         "images/properties/487th-north/8153493523858286843"
       ],
       "highlights": [
-        "1 of 2 lots available",
+        "2 Lots Available",
         "$650 Down / $650 Monthly",
         "12% Interest Rate, No Pre-payment Penalty",
         "Just minutes from I-10 freeway"
