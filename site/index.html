@@ -32,6 +32,15 @@
 </noscript>
 <link rel="stylesheet" href="assets/korr.css">
 
+<!-- Whop Pixel: ad attribution for campaigns run through Whop Ads.
+     Scoped to this business account; tracks page views and contact events. -->
+<script>
+!function(w,d,s,u,n,a,b){if(w[n])return;a=w[n]={q:[],t:+new Date,s:[],o:u,track:function(){a.q.push([+new Date].concat([].slice.call(arguments)))},setScope:function(){a.s=[].slice.call(arguments).filter(function(x){return typeof x==="string"});a.q.push([+new Date,"setScope"].concat(a.s))},scope:function(){var c=[].slice.call(arguments);return{track:function(){a.q.push([+new Date].concat([].slice.call(arguments)).concat([{__scope:c}]))}}}};b=d.createElement(s);b.async=1;b.src=u+"/s.js";d.getElementsByTagName(s)[0].parentNode.insertBefore(b,d.getElementsByTagName(s)[0])}(window,document,"script","https://t.whop.tw","whop");
+whop.setScope("biz_eYTVtfVYAdO3by");
+whop.track("page");
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest('a[href^="tel:"],a[href^="sms:"]');if(a&&window.whop)whop.track("contact");});
+</script>
+
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"RealEstateAgent","name":"KORR Building Company LLC",
 "telephone":"+1-480-453-4044","email":"Charlielandandhomes2@gmail.com",
