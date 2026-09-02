@@ -555,13 +555,17 @@ window.KORR_DATA = {
       "interestRate": "12%",
       "lots": [
         {
+          "id": "4",
+          "status": "available"
+        },
+        {
           "id": "5",
           "status": "available"
         }
       ],
       "highlights": [
         "CLOSE TO ELECTRIC",
-        "Lot 5 — Available",
+        "2 Lots Available",
         "12% Interest Rate, No pre-payment penalty"
       ],
       "directions": [
