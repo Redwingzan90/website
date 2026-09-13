@@ -233,8 +233,8 @@ window.KORR_DATA = {
         {
           "id": "E",
           "status": "available",
-          "price": "$35,000",
-          "terms": "cash"
+          "price": "$45,000",
+          "terms": "$650 down · $650/mo"
         }
       ],
       "images": [
