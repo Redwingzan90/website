@@ -52,7 +52,7 @@ window.KORR_DATA = {
   "email": "Charlielandandhomes2@gmail.com",
   "emailAlt": "korrbuildingco.llc@gmail.com",
   "address": "1505 East Everglade Ave, Odessa, TX 79762",
-  "titleAgency": "Pioneer Title Agency, Maricopa",
+  "titleAgency": "NBTS",
   "locations": [
     {
       "key": "all",

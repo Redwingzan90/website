@@ -45,7 +45,7 @@ sites listing bank-financed land cannot truthfully copy this.
   functional part of the product, not marketing copy.
 - Lots are physically marked in the field (white plastic pipe at corners, posted
   directional signs on the roadway).
-- NBTS closed out the owner-financing contracts; closings and recording are handled through Pioneer Title Agency, Maricopa.
+- NBTS closed out the owner-financing contracts; NBTS handles closings and recording.
 - Parcel numbers are recorded and publicly verifiable through the county.
 - Inventory is a fixed set of individually-numbered lots per property; each is either
   available or sold. Availability changes and the site must reflect it accurately.
@@ -99,7 +99,7 @@ Real and usable:
 - Recorded parcel numbers: 506-27-066, 506-16-004C, 506-74-024, 504-13-090M/K, 176581.
 - Real turn-by-turn directions to every property.
 - Real lot-level availability across 40 lots.
-- Contracts closed out by: NBTS. Closing partner: Pioneer Title Agency, Maricopa.
+- Contracts closed out by: NBTS. Title company: NBTS.
 - Five folders of additional unprocessed photos in `add images/`, mapping to Properties
   #4, #7, #10, #11, #5.
 
