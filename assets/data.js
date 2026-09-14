@@ -224,7 +224,7 @@ window.KORR_DATA = {
         },
         {
           "id": "C",
-          "status": "available",
+          "status": "sold",
           "price": "$35,000",
           "terms": "cash"
         },
@@ -234,7 +234,7 @@ window.KORR_DATA = {
         },
         {
           "id": "E",
-          "status": "available",
+          "status": "sold",
           "price": "$45,000",
           "terms": "$650 down · $650/mo"
         }
@@ -248,7 +248,7 @@ window.KORR_DATA = {
       ],
       "highlights": [
         "$2,000 Down / $650 Monthly",
-        "2 of 5 lots available",
+        "0 of 5 lots available",
         "Directional signs posted on roadway",
         "Just minutes from I-10 freeway"
       ],
