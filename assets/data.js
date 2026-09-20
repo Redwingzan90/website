@@ -263,7 +263,7 @@ window.KORR_DATA = {
       "title": "Property #5 — 411th & Camelback",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
-      "price": "$45,000",
+      "price": "$55,000",
       "downPayment": "$2,000",
       "monthly": "$650/mo",
       "interestRate": "12%",
@@ -282,7 +282,7 @@ window.KORR_DATA = {
           "id": "3",
           "status": "available",
           "price": "$55,000",
-          "terms": "$650 down · $650/mo"
+          "terms": "on terms"
         },
         {
           "id": "4",
