@@ -41,11 +41,6 @@ window.KORR_DATA = {
         "label": "Arizona parcels",
         "phone": "701-500-5906",
         "href": "tel:7015005906"
-      },
-      "seminole": {
-        "label": "Texas houses",
-        "phone": "(806) 752-0022",
-        "href": "tel:8067520022"
       }
     }
   },
@@ -61,10 +56,6 @@ window.KORR_DATA = {
     {
       "key": "tonopah",
       "label": "Tonopah, AZ"
-    },
-    {
-      "key": "seminole",
-      "label": "Seminole, TX"
     }
   ],
   "properties": [
@@ -581,109 +572,6 @@ window.KORR_DATA = {
       ],
       "deedRestrictions": true,
       "special": "CLOSE TO ELECTRIC"
-    },
-    {
-      "id": 201,
-      "title": "460A County Road 225 F",
-      "location": "seminole",
-      "locationLabel": "Seminole, TX",
-      "price": "$140,000",
-      "downPayment": "$2,500",
-      "monthly": "$2,500/mo",
-      "interestRate": "Owner Financed",
-      "isHouse": true,
-      "parcel": "176581",
-      "address": "460A County Road 225 F, Seminole, TX 79360",
-      "bedrooms": "2 Bed",
-      "bathrooms": "1 Bath",
-      "sqft": "1,250 sqft",
-      "acres": "1.1 Acres",
-      "year": "2022",
-      "hoa": "$0/mo",
-      "propertyType": "Single Family",
-      "images": [
-        "images/1b9104e42c32e107eafffe501a4392fd-cc_ft_384.webp",
-        "images/4fb12e7923cbc385d1de6f4afd6be15c-cc_ft_768.webp",
-        "images/5680bc8bcf87824b9439b6a2db898104-cc_ft_384.webp",
-        "images/7f96a3e02946af426511f04caa5b9b74-cc_ft_384.webp",
-        "images/86dbd08cf3a1fce07b0c1b39caf9f0a9-cc_ft_384.webp",
-        "images/90d5e8692fc5dd6f2de8f1586578597f-cc_ft_384.webp",
-        "images/a13bf9a07936cbd603c2ff14ec968975-cc_ft_768.webp",
-        "images/b1cf8906b1fe02d544f37418100b4974-cc_ft_384.webp",
-        "images/b3f76dfbc32fc114d378d88dacc3b850-cc_ft_768.webp",
-        "images/c2a6214691c47f48a314f2954bf7236b-cc_ft_384.webp",
-        "images/d81d8f559cc200f02cf39e15af65e974-cc_ft_384.webp",
-        "images/eaea55ac7266e8c5bf8185c2ca7a1cff-cc_ft_768.webp",
-        "images/f22dfb7f275294a0d5ea2859239df7a8-cc_ft_768.webp",
-        "images/fe4627dc93e2f2203fe41475740ed8c3-cc_ft_384.webp"
-      ],
-      "highlights": [
-        "2 Bed / 1 Bath / 1,250 sqft",
-        "Built in 2022",
-        "Owner Financing Available",
-        "No HOA Fees",
-        "Shares Well & Septic",
-        "1.1 Acre Lot"
-      ],
-      "directions": [
-        "From Seminole, head west on Hwy 180",
-        "Turn north on CR 225",
-        "Property ~3 miles north on right",
-        "Look for KORR signs"
-      ],
-      "special": "NEW CONSTRUCTION"
-    },
-    {
-      "id": 202,
-      "title": "460B County Road 225 F",
-      "location": "seminole",
-      "locationLabel": "Seminole, TX",
-      "price": "$160,000",
-      "downPayment": "$2,500",
-      "monthly": "$2,500/mo",
-      "interestRate": "Owner Financed",
-      "isHouse": true,
-      "parcel": "176581",
-      "address": "460B County Road 225 F, Seminole, TX 79360",
-      "bedrooms": "3 Bed",
-      "bathrooms": "2 Bath",
-      "sqft": "1,325 sqft",
-      "acres": "1.1 Acres",
-      "year": "2022",
-      "hoa": "$0/mo",
-      "propertyType": "Single Family",
-      "images": [
-        "images/22d7ce0222415f8af75e3d01bb3a0aef-cc_ft_384.webp",
-        "images/3d63a1fb15f36f6eb3020bd118dd1817-cc_ft_384.webp",
-        "images/3e955a4d786eb7c3e52481e365d4e6ab-cc_ft_384.webp",
-        "images/40cfc7d702a301b8d7ed15438a271caa-cc_ft_384.webp",
-        "images/64fb3b0210551a13f331a29d0c94e19f-cc_ft_384.webp",
-        "images/700ad53bdbc171da1d4efd4223c0e8c7-cc_ft_384.webp",
-        "images/944297836e2455ec8917b0e70ebdec10-cc_ft_384.webp",
-        "images/c5289299418228b89e8439dfbdf3ff36-cc_ft_384.webp",
-        "images/df31f414449945bfb680a6e3b7f2b9d5-cc_ft_384.webp",
-        "images/fa70301ac851601e5cfc21d932209b67-cc_ft_384.webp",
-        "images/101d75ad75e922b064e0e96f3b0ce2f9-cc_ft_768.webp",
-        "images/1572e1975184df4e700175973ef5c4c4-cc_ft_768.webp",
-        "images/17680c8362e7f4b5e488d7f3028fe975-cc_ft_768.webp",
-        "images/9637d9248e96891bb0109b73e80af71a-cc_ft_768.webp",
-        "images/cb63a35f7534b6a81b8f38e7b8d27b0b-cc_ft_768.webp"
-      ],
-      "highlights": [
-        "3 Bed / 2 Bath / 1,325 sqft",
-        "Built in 2022",
-        "Carport Included",
-        "Owner Financing Available",
-        "Central Air & Heat",
-        "1.1 Acre Lot"
-      ],
-      "directions": [
-        "From Seminole, head west on Hwy 180",
-        "Turn north on CR 225",
-        "Property ~3.5 miles north on left",
-        "Look for KORR signs"
-      ],
-      "special": "NEW CONSTRUCTION"
     }
   ],
   "faqs": [
@@ -705,7 +593,7 @@ window.KORR_DATA = {
     },
     {
       "q": "What interest rate do you charge?",
-      "a": "Tonopah AZ properties are financed at 12% interest. Texas properties have their own owner financing terms — call for details."
+      "a": "Arizona properties are financed at 12% interest."
     },
     {
       "q": "Can I build on the land right away?",
@@ -724,10 +612,6 @@ window.KORR_DATA = {
     "tonopah": {
       "src": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d106464.41568308935!2d-113.0533335!3d33.5203565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c96c4e0b1b1b1b%3A0x1234567890abcdef!2sTonopah%2C%20AZ%2085354!5e0!3m2!1sen!2sus!4v1234567890",
       "info": "<div><h4>Tonopah, Arizona</h4><p>Located west of Phoenix, just off I-10. Perfect desert living with stunning sunsets and wide open spaces.</p></div><div><h4>Climate</h4><p>Low humidity, 300+ days of sunshine annually. Ideal for outdoor enthusiasts and off-grid living.</p></div><div><h4>Access</h4><p>Minutes from I-10 freeway. Easy access to Phoenix, Wickenburg, and surrounding communities.</p></div>"
-    },
-    "seminole": {
-      "src": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d111064.5!2d-102.65!3d32.72!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86fbc4e3b3a3b3a3%3A0x1234567890abcdef!2sSeminole%2C%20TX!5e0!3m2!1sen!2sus!4v1234567890",
-      "info": "<div><h4>Seminole, Texas</h4><p>Located in the Permian Basin region. Growing community with strong ranching and oil industry presence.</p></div><div><h4>Climate</h4><p>Semi-arid climate with hot summers and mild winters. Low humidity, plenty of sunshine year-round.</p></div><div><h4>Access</h4><p>Easy access via Hwy 180. Short drive to Lubbock and Midland. Rural living with modern amenities nearby.</p></div>"
     }
   }
 };

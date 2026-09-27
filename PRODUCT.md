@@ -27,10 +27,10 @@ Secondary: small investors buying multiple adjacent lots to hold.
 
 ## Product Purpose
 
-Sell owner-financed residential land in Tonopah, Arizona, and owner-financed houses in
-Seminole, Texas, directly to buyers with no bank, no credit check, and no qualifying
-process. Success is a phone call or form inquiry from a buyer who already understands the
-specific lot and its terms before they make contact.
+Sell owner-financed residential land near Tonopah, Arizona, directly to buyers with no
+bank, no credit check, and no qualifying process. The website lists Arizona land only.
+Success is a phone call or form inquiry from a buyer who already understands the specific
+lot and its terms before they make contact.
 
 ## Positioning
 
@@ -54,10 +54,9 @@ sites listing bank-financed land cannot truthfully copy this.
 
 ## Capabilities and Constraints
 
-- **13 properties**: 11 Tonopah AZ land parcels (IDs 1–11) and 2 Seminole TX houses
-  (IDs 201, 202).
-- **40 individually tracked lots**, currently 28 available / 12 sold.
-- Prices $29,900–$69,900 for AZ land; $140,000 and $160,000 for the TX houses.
+- **11 properties**: Tonopah AZ land parcels (IDs 1–11).
+- **40 individually tracked lots**, currently 26 available / 14 sold.
+- Prices $29,900–$69,900.
 - Down payments from $425. Monthly payments $425–$980. AZ land financed at 12% interest.
   Loan terms range 7½–11 years. No pre-payment penalty on any property.
 - Some properties carry deed restrictions (Property #11) and some are noted close to
@@ -82,8 +81,7 @@ sites listing bank-financed land cannot truthfully copy this.
   and must never be published.
 - The rest of the team, all real and all live on the site:
   Charlie 701-500-5906 · Kisha (manager) (432) 308-2481 · Ben 602-525-5688.
-- **Enquiries route by region**, as the live site does: Arizona parcels → 701-500-5906,
-  Texas houses → (806) 752-0022. Preserve this behaviour.
+- Arizona parcel enquiries route to 701-500-5906.
 - `928-299-9034` appeared only in the stale local export and is **not** a current number.
 - Email: Charlielandandhomes2@gmail.com, korrbuildingco.llc@gmail.com.
 - No binding visual constraint. The previous "Desert Ledger" look (warm near-black, gold,
@@ -94,8 +92,7 @@ sites listing bank-financed land cannot truthfully copy this.
 
 Real and usable:
 
-- 82 photographs of actual parcels and houses, with responsive `-640`/`-1280` webp
-  variants already generated.
+- 51 photographs of Arizona parcels, with responsive `-640`/`-1280` webp variants.
 - Recorded parcel numbers: 506-27-066, 506-16-004C, 506-74-024, 504-13-090M/K, 176581.
 - Real turn-by-turn directions to every property.
 - Real lot-level availability across 40 lots.

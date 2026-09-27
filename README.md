@@ -1,22 +1,22 @@
 # KORR Building Company LLC
 
-Owner-financed land in Tonopah, Arizona and homes in Seminole, Texas.
+Owner-financed land near Tonopah, Arizona.
 Static site — no build step, no framework. Deployed on Netlify from this repo.
 
 ## Changing a property
 
 **Never hand-edit `assets/data.js`.** It is generated.
 
-1. Edit `data.snapshot.json` — the source of truth for every property fact.
+1. Edit `data.snapshot.json` — the source of truth for property facts. Only Arizona land is published.
 2. Regenerate and check:
 
 ```bash
 node _build-data.mjs && node _verify-data.mjs
 ```
 
-`_verify-data.mjs` must print **PASS** before you commit. It proves nothing was
-lost against the snapshot, and it fails the build if the site would publish
-something the record contradicts.
+`_verify-data.mjs` must print **PASS** before you commit. It verifies every
+published Arizona land fact against the snapshot and rejects non-Arizona or
+house listings.
 
 ## What the checker enforces
 

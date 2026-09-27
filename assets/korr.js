@@ -47,12 +47,11 @@
   const w640 = (i) => /\.(webp|png|jpe?g)$/i.test(i) ? i : i + '-640.webp'
   const w1280 = (i) => /\.(webp|png|jpe?g)$/i.test(i) ? i : i + '-1280.webp'
   const num = (s) => parseFloat(String(s || '').replace(/[^0-9.]/g, '')) || 0
-  const openLots = (p) => p.isHouse ? 1 : (p.lots || []).filter(l => l.status === 'available').length
-  const totalLots = (p) => p.isHouse ? 1 : (p.lots || []).length
+  const openLots = (p) => (p.lots || []).filter(l => l.status === 'available').length
+  const totalLots = (p) => (p.lots || []).length
 
   function status (p) {
     const o = openLots(p), t = totalLots(p)
-    if (p.isHouse) return { cls: 'open', text: 'For Sale' }
     if (o === 0) return { cls: 'closed', text: 'Conveyed' }
     if (o === t) return { cls: 'open', text: o + (o === 1 ? ' lot open' : ' lots open') }
     return { cls: 'part', text: o + ' of ' + t + ' open' }
@@ -79,21 +78,17 @@
   function instrumentHTML (p, i) {
     const st = status(p)
     const imgs = p.images || []
-    const parcel = p.parcel ? 'Parcel ' + esc(p.parcel) : (p.isHouse ? esc(p.propertyType || 'Single family') : 'Parcel on file')
+    const parcel = p.parcel ? 'Parcel ' + esc(p.parcel) : 'Parcel on file'
     const plates = imgs.length
       ? imgs.slice(0, 2).map(im =>
           `<img src="${esc(w640(im))}" alt="" loading="lazy" decoding="async" width="220" height="165">`).join('') +
         (imgs.length > 2 ? `<span class="plate-more">+${imgs.length - 2}</span>` : '')
       : `<span class="no-plate">${ico('noimg')}<span>Plate to follow</span></span>`
 
-    const lotStrip = p.isHouse
-      ? ''
-      : `<span class="lots" aria-hidden="true">${(p.lots || []).map(l =>
-          `<span class="lot ${l.status === 'available' ? 'open' : 'gone'}">${esc(l.id)}</span>`).join('')}</span>`
+    const lotStrip = `<span class="lots" aria-hidden="true">${(p.lots || []).map(l =>
+      `<span class="lot ${l.status === 'available' ? 'open' : 'gone'}">${esc(l.id)}</span>`).join('')}</span>`
 
-    const meta = p.isHouse
-      ? [p.bedrooms, p.bathrooms, p.sqft, p.acres].filter(Boolean)
-      : [p.locationLabel, parcel, p.loanTerm ? 'Term ' + p.loanTerm : null, p.interestRate ? p.interestRate + ' interest' : null].filter(Boolean)
+    const meta = [p.locationLabel, parcel, p.loanTerm ? 'Term ' + p.loanTerm : null, p.interestRate ? p.interestRate + ' interest' : null].filter(Boolean)
 
     const terms =
         p.downPayment === 'Cash' ? 'Cash sale'
@@ -203,7 +198,7 @@
              Call ${esc(D.phone)} for a pin drop or to walk the parcel.</span>
          </div>`
 
-    const platHTML = p.isHouse ? '' : `
+    const platHTML = `
       <div class="plat">
         <h3 class="caption">Lots of record</h3>
         <div class="plat-grid">${(p.lots || []).map(l => `
@@ -243,9 +238,6 @@
             ${termRow('Monthly', p.monthly)}
             ${termRow('Interest', p.interestRate)}
             ${termRow('Term', p.loanTerm)}
-            ${p.isHouse ? termRow('Bedrooms', p.bedrooms) + termRow('Bathrooms', p.bathrooms) +
-                          termRow('Floor area', p.sqft) + termRow('Lot', p.acres) +
-                          termRow('Built', p.year) + termRow('HOA', p.hoa) : ''}
             ${termRow('Parcel', p.parcel)}
           </dl>
           <p class="typed" style="margin-top:1rem;color:var(--ink-3)">
@@ -432,11 +424,8 @@
 
   /* ------------------------------------------------------------ the summary */
   function initSummary () {
-    // Land lots and houses are different things and are counted separately —
-    // rolling a house into the "lots of record" figure misstates the inventory.
-    let open = 0, lots = 0, houses = 0, low = Infinity
+    let open = 0, lots = 0, low = Infinity
     D.properties.forEach(p => {
-      if (p.isHouse) { houses++; return }
       lots += (p.lots || []).length
       open += (p.lots || []).filter(l => l.status === 'available').length
       const n = num(p.price); if (n) low = Math.min(low, n)
@@ -444,13 +433,11 @@
     $('#sumInstruments').textContent = D.properties.length
     $('#sumLots').textContent = lots
     $('#sumOpen').textContent = open
-    $('#sumHouses').textContent = houses
     $('#sumLow').textContent = isFinite(low) ? '$' + low.toLocaleString('en-US') : '—'
   }
 
   /* -------------------------------------------------- the standing call bar */
-  /* Shows once the visitor is past the certificate, and re-labels itself to the
-     right regional line while they are reading Arizona or Texas listings. */
+  /* Shows once the visitor is past the certificate and follows the active filter. */
   function initCallbar () {
     const bar = $('#callbar')
     if (!bar) return
@@ -484,7 +471,7 @@
     })
     update()
 
-    // follow the filter: looking at Texas houses should offer the Texas line
+    // Follow the active location filter.
     $('#tabs').addEventListener('click', (e) => {
       const b = e.target.closest('.chip')
       if (b) setLine(b.dataset.key)
@@ -506,7 +493,7 @@
     $$('[data-phone]').forEach(el => { el.textContent = D.phone })
     $$('[data-phone-href]').forEach(el => { el.setAttribute('href', D.phoneHref) })
 
-    // the team — every line from the live site stays reachable
+    // Keep the company contact lines reachable.
     const team = $('#teamList')
     if (team && D.contacts && D.contacts.team) {
       team.innerHTML = D.contacts.team.map(m =>

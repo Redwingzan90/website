@@ -17,11 +17,14 @@ const snap = JSON.parse(fs.readFileSync('data.snapshot.json', 'utf8'))
 const newPhotos = JSON.parse(fs.readFileSync('_new-photos.json', 'utf8'))
 
 const PHOTO_TARGET = { 4: 'property4', 10: '487th-north', 5: 'property5' }
+const arizonaLocations = new Set(snap.locations
+  .filter(location => /,\s*AZ$/i.test(location.label))
+  .map(location => location.key))
 
 const log = []
 const owner = []      // things only the owner can decide, surfaced at the end
 
-const properties = snap.properties.map(p => {
+const properties = snap.properties.filter(p => !p.isHouse && arizonaLocations.has(p.location)).map(p => {
   const out = { ...p }
   const dest = PHOTO_TARGET[p.id]
   if (dest && newPhotos[dest]) {
@@ -100,7 +103,7 @@ if (removed) log.push(`  de-duplicated ${removed} photo slots across properties`
 --------------------------------------------------------------------------- */
 const COUNT_RE = /^(all|\d+)\s+(lots?|parcels?)\s+available$/i
 for (const p of properties) {
-  if (p.isHouse || !p.highlights) continue
+  if (!p.highlights) continue
   const open = (p.lots || []).filter(l => l.status === 'available').length
   const total = (p.lots || []).length
   p.highlights = p.highlights.map(h => {
@@ -143,9 +146,12 @@ const contacts = {
   ],
   byRegion: {
     tonopah: { label: 'Arizona parcels', phone: '701-500-5906', href: 'tel:7015005906' },
-    seminole: { label: 'Texas houses', phone: '(806) 752-0022', href: 'tel:8067520022' },
   },
 }
+
+const faqs = snap.faqs.map(faq => faq.q === 'What interest rate do you charge?'
+  ? { ...faq, a: 'Arizona properties are financed at 12% interest.' }
+  : faq)
 
 const data = {
   phone: contacts.primary,
@@ -155,10 +161,10 @@ const data = {
   emailAlt: 'korrbuildingco.llc@gmail.com',
   address: '1505 East Everglade Ave, Odessa, TX 79762',
   titleAgency: 'NBTS',
-  locations: snap.locations,
+  locations: snap.locations.filter(location => location.key === 'all' || arizonaLocations.has(location.key)),
   properties,
-  faqs: snap.faqs,
-  maps: snap.maps,
+  faqs,
+  maps: Object.fromEntries(Object.entries(snap.maps).filter(([key]) => arizonaLocations.has(key))),
   // testimonials intentionally absent — see PRODUCT.md > Evidence on Hand
 }
 

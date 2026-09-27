@@ -15,6 +15,10 @@ import crypto from 'node:crypto'
 import vm from 'node:vm'
 
 const snap = JSON.parse(fs.readFileSync('data.snapshot.json', 'utf8'))
+const arizonaLocations = new Set(snap.locations
+  .filter(location => /,\s*AZ$/i.test(location.label))
+  .map(location => location.key))
+const expectedProperties = snap.properties.filter(p => !p.isHouse && arizonaLocations.has(p.location))
 const ctx = { window: {} }
 vm.createContext(ctx)
 vm.runInContext(fs.readFileSync('assets/data.js', 'utf8'), ctx)
@@ -29,14 +33,14 @@ const COUNT_RE = /^(all|\d+)\s+(lots?|parcels?)\s+available$/i
 const FIXED_RE = /^\d+ of \d+ (lots?|parcels?) available$/i
 const PHONE_ONLY = /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/
 
-if (live.properties.length !== snap.properties.length) {
-  problems.push(`property count ${live.properties.length} != ${snap.properties.length}`)
+if (live.properties.length !== expectedProperties.length) {
+  problems.push(`property count ${live.properties.length} != Arizona land count ${expectedProperties.length}`)
 }
 
 const fileFor = (b) => /\.(webp|png|jpe?g)$/i.test(b) ? b : `${b}-640.webp`
 const sha = (f) => { try { return crypto.createHash('sha1').update(fs.readFileSync(f)).digest('hex') } catch { return null } }
 
-for (const before of snap.properties) {
+for (const before of expectedProperties) {
   const after = byId.get(before.id)
   if (!after) { problems.push(`property #${before.id} (${before.title}) MISSING`); continue }
 
@@ -82,7 +86,23 @@ for (const before of snap.properties) {
   }
 }
 
-if (JSON.stringify(snap.faqs) !== JSON.stringify(live.faqs)) problems.push('FAQ content changed')
+const expectedFaqs = snap.faqs.map(faq => faq.q === 'What interest rate do you charge?'
+  ? { ...faq, a: 'Arizona properties are financed at 12% interest.' }
+  : faq)
+if (JSON.stringify(expectedFaqs) !== JSON.stringify(live.faqs)) problems.push('FAQ content changed')
+
+if (live.properties.some(p => p.isHouse || !arizonaLocations.has(p.location))) {
+  problems.push('non-Arizona or house listing included in published inventory')
+}
+if (live.locations.some(location => location.key !== 'all' && !arizonaLocations.has(location.key))) {
+  problems.push('non-Arizona location filter included')
+}
+if (Object.keys(live.maps || {}).some(key => !arizonaLocations.has(key))) {
+  problems.push('non-Arizona map included')
+}
+if (Object.keys(live.contacts?.byRegion || {}).some(key => !arizonaLocations.has(key))) {
+  problems.push('non-Arizona regional contact included')
+}
 
 /* ---- ASSERTION 1: no availability claim may contradict the lot record ---- */
 for (const p of live.properties) {
@@ -141,7 +161,7 @@ if (broken.length) problems.push(`${broken.length} broken image paths:\n      ` 
 const shipped = ['index.html', 'assets/data.js', 'assets/korr.js']
   .filter(f => fs.existsSync(f)).map(f => fs.readFileSync(f, 'utf8')).join('\n')
 const digits = (s) => s.replace(/[^0-9]/g, '')
-const REQUIRED = ['480-453-4044', '701-500-5906', '(432) 308-2481', '602-525-5688', '(806) 752-0022']
+const REQUIRED = ['480-453-4044', '701-500-5906', '(432) 308-2481', '602-525-5688']
 const missing = REQUIRED.filter(x => !digits(shipped).includes(digits(x)))
 if (missing.length) problems.push('contact numbers lost: ' + missing.join(', '))
 if (/4804534004|480-453-4004/.test(shipped)) problems.push('the mistyped 480-453-4004 is present — must be 4044')
@@ -158,7 +178,7 @@ for (const p of live.properties) {
 
 console.log('KORR DATA INTEGRITY CHECK   (baseline: live site, 2026-08-23)')
 console.log('-'.repeat(64))
-console.log(`properties      ${live.properties.length} / ${snap.properties.length}`)
+console.log(`properties      ${live.properties.length} / ${expectedProperties.length} Arizona land (${snap.properties.length - expectedProperties.length} excluded)`)
 console.log(`lots            ${lots}   (${av} available)`)
 console.log(`highlights      ${hl}`)
 console.log(`direction steps ${dir}`)
