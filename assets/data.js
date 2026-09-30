@@ -1,9 +1,4 @@
-/* KORR Building Co — property data.
- * GENERATED from data.snapshot.json by _build-data.mjs. Do not hand-edit.
- * Source of truth: the live site, captured 2026-08-23.
- * To change a property fact, edit data.snapshot.json and re-run:
- *     node _build-data.mjs && node _verify-data.mjs
- */
+/* KORR property data; generated from data.snapshot.json. */
 window.KORR_DATA = {
   "phone": "480-453-4044",
   "phoneHref": "tel:4804534044",
@@ -572,6 +567,52 @@ window.KORR_DATA = {
       ],
       "deedRestrictions": true,
       "special": "CLOSE TO ELECTRIC"
+    },
+    {
+      "id": 12,
+      "title": "Property #12 — 367th & Salome",
+      "location": "tonopah",
+      "locationLabel": "Tonopah, AZ",
+      "price": "$49,900",
+      "downPayment": "$700",
+      "monthly": "$700/mo",
+      "lots": [
+        {
+          "id": "1",
+          "status": "available"
+        },
+        {
+          "id": "2",
+          "status": "available"
+        },
+        {
+          "id": "3",
+          "status": "available"
+        },
+        {
+          "id": "4",
+          "status": "available"
+        },
+        {
+          "id": "5",
+          "status": "available"
+        }
+      ],
+      "images": [
+        "images/properties/367th-salome/5631",
+        "images/properties/367th-salome/5632",
+        "images/properties/367th-salome/5633",
+        "images/properties/367th-salome/5634",
+        "images/properties/367th-salome/5635",
+        "images/properties/367th-salome/5636",
+        "images/properties/367th-salome/5637",
+        "images/properties/367th-salome/5638",
+        "images/properties/367th-salome/5639"
+      ],
+      "highlights": [
+        "Lots 1-5 Available",
+        "$700 Down / $700 Monthly"
+      ]
     }
   ],
   "faqs": [

@@ -1,15 +1,4 @@
-// Builds assets/data.js from data.snapshot.json.
-//
-// SOURCE OF TRUTH: data.snapshot.json, extracted verbatim from the LIVE site
-// (https://korrbuildingcollc.netlify.app/) on 2026-08-23. The older local
-// Downloads copy is archived at data.snapshot.local-downloads.json and is NOT
-// used — it was stale (missing Property #1, wrong down payments, wrong lot
-// availability).
-//
-// Only these transforms are applied, and each is logged:
-//   1. new photographs appended (authentic ones first so they lead the card)
-//   2. fabricated testimonials dropped (see PRODUCT.md > Evidence on Hand)
-// Property facts are never retyped by hand.
+// Builds published property data from the authoritative snapshot.
 import fs from 'node:fs'
 import crypto from 'node:crypto'
 
@@ -37,13 +26,7 @@ const properties = snap.properties.filter(p => !p.isHouse && arizonaLocations.ha
   return out
 })
 
-/* ---------------------------------------------------------------------------
-   1. DE-DUPLICATE PHOTOGRAPHS ACROSS PROPERTIES.
-   The live data shows byte-identical photos on different parcels. Presenting
-   one parcel's ground as another's misleads a buyer about what they are
-   purchasing, so each photograph is kept on exactly one property, chosen by
-   folder provenance, and removed everywhere else.
---------------------------------------------------------------------------- */
+// Keep each photo on one property, using folder provenance when available.
 const sha = (f) => {
   try { return crypto.createHash('sha1').update(fs.readFileSync(f)).digest('hex') }
   catch { return null }
@@ -95,12 +78,7 @@ for (const [, cands] of seen) {
 }
 if (removed) log.push(`  de-duplicated ${removed} photo slots across properties`)
 
-/* ---------------------------------------------------------------------------
-   2. AVAILABILITY CLAIMS MUST MATCH THE LOT ARRAY.
-   Several highlight strings assert a lot count that the lots array contradicts.
-   The lots array is the record; the marketing string is corrected to match, and
-   every correction is reported so the owner can confirm which was right.
---------------------------------------------------------------------------- */
+// Align availability highlights with each property's lot statuses.
 const COUNT_RE = /^(all|\d+)\s+(lots?|parcels?)\s+available$/i
 for (const p of properties) {
   if (!p.highlights) continue
@@ -119,10 +97,7 @@ for (const p of properties) {
   })
 }
 
-/* ---------------------------------------------------------------------------
-   3. A bare phone number is not a driving direction. Several `directions`
-   arrays end with one; it renders as a numbered route step.
---------------------------------------------------------------------------- */
+// Remove phone numbers from numbered route steps.
 const PHONE_ONLY = /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/
 for (const p of properties) {
   if (!p.directions) continue
@@ -131,11 +106,9 @@ for (const p of properties) {
   if (p.directions.length !== before) log.push(`  #${p.id}: dropped a bare phone number from the route steps`)
 }
 
-// Every contact on the live site, preserved. The team is real and buyers use
-// these lines; the regional routing is how the live site actually behaves.
+// Preserve the live site's contacts and regional routing.
 const contacts = {
-  // Confirmed by owner 2026-08-23: 480-453-4044 is the main line (Sebastian).
-  // The 4004 spelling that briefly circulated was a typo.
+  // The confirmed main line is 480-453-4044.
   primary: '480-453-4044',
   primaryHref: 'tel:4804534044',
   team: [
@@ -168,12 +141,7 @@ const data = {
   // testimonials intentionally absent — see PRODUCT.md > Evidence on Hand
 }
 
-const banner = `/* KORR Building Co — property data.
- * GENERATED from data.snapshot.json by _build-data.mjs. Do not hand-edit.
- * Source of truth: the live site, captured 2026-08-23.
- * To change a property fact, edit data.snapshot.json and re-run:
- *     node _build-data.mjs && node _verify-data.mjs
- */\n`
+const banner = '/* KORR property data; generated from data.snapshot.json. */\n'
 
 fs.writeFileSync('assets/data.js', banner + 'window.KORR_DATA = ' + JSON.stringify(data, null, 2) + ';\n')
 
