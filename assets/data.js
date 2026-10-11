@@ -537,11 +537,15 @@ window.KORR_DATA = {
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
       "parcel": "504-13-090M/K",
-      "price": "$55,000",
-      "downPayment": "$695",
-      "monthly": "$695/mo",
+      "price": "$69,900",
+      "downPayment": "$980",
+      "monthly": "$980/mo",
       "interestRate": "12%",
       "lots": [
+        {
+          "id": "4",
+          "status": "available"
+        },
         {
           "id": "5",
           "status": "available"
@@ -549,7 +553,7 @@ window.KORR_DATA = {
       ],
       "highlights": [
         "CLOSE TO ELECTRIC",
-        "Lot 5 — Available",
+        "Lots 4 & 5 — Available",
         "12% Interest Rate, No pre-payment penalty"
       ],
       "directions": [
