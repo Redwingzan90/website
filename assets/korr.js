@@ -234,10 +234,12 @@
           <h3 class="caption">Terms of sale</h3>
           <dl class="terms" style="margin-top:.8rem">
             ${termRow('Price', p.price, 'big')}
-            ${termRow('Down payment', p.downPayment, 'accent')}
-            ${termRow('Monthly', p.monthly)}
-            ${termRow('Interest', p.interestRate)}
-            ${termRow('Term', p.loanTerm)}
+            ${p.downPayment === 'Cash'
+              ? termRow('Sale type', 'Cash only', 'accent')
+              : `${termRow('Down payment', p.downPayment, 'accent')}
+                ${termRow('Monthly', p.monthly)}
+                ${termRow('Interest', p.interestRate)}
+                ${termRow('Term', p.loanTerm)}`}
             ${termRow('Parcel', p.parcel)}
           </dl>
           <p class="typed" style="margin-top:1rem;color:var(--ink-3)">

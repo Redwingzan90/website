@@ -61,8 +61,8 @@ sites listing bank-financed land cannot truthfully copy this.
   Loan terms range 7½–11 years. No pre-payment penalty on any property.
 - Some properties carry deed restrictions (Property #11) and some are noted close to
   electric.
-- Mixed sale types exist: certain lots are cash-only at a different price than the
-  financed price (Properties #4 and #5). This nuance must not be flattened.
+- Property #4 has mixed lot-level sale terms. All available lots on Property #5 are
+  cash-only at $59,900.
 - Properties **#1 (Parcel 506-42-024)** and **#8 (Harquahala)** have **no photographs**.
   Confirmed 2026-08-23: none available.
 - Authoritative data snapshot: `data.snapshot.json`, extracted verbatim from the **live

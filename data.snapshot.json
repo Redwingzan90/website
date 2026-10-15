@@ -198,10 +198,9 @@
       "title": "Property #5 — 411th & Camelback",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
-      "price": "$55,000",
-      "downPayment": "$2,000",
-      "monthly": "$650/mo",
-      "interestRate": "12%",
+      "price": "$59,900",
+      "downPayment": "Cash",
+      "monthly": "—",
       "lots": [
         {
           "id": "1",
@@ -210,19 +209,19 @@
         {
           "id": "2",
           "status": "available",
-          "price": "$55,000",
+          "price": "$59,900",
           "terms": "cash"
         },
         {
           "id": "3",
           "status": "available",
-          "price": "$55,000",
-          "terms": "on terms"
+          "price": "$59,900",
+          "terms": "cash"
         },
         {
           "id": "4",
           "status": "available",
-          "price": "$55,000",
+          "price": "$59,900",
           "terms": "cash"
         },
         {
@@ -240,7 +239,7 @@
       ],
       "highlights": [
         "3 Lots Available",
-        "$2,000 Down / $650 Monthly",
+        "$59,900 Cash Only",
         "Just minutes from I-10 freeway"
       ],
       "directions": [
