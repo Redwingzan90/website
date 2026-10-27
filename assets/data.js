@@ -56,10 +56,10 @@ window.KORR_DATA = {
   "properties": [
     {
       "id": 1,
-      "title": "Property #1 — Parcel 506-42-024",
+      "title": "Property #1 — Parcel 506-42-024Z",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
-      "parcel": "506-42-024",
+      "parcel": "506-42-024Z",
       "price": "$69,900",
       "downPayment": "$980",
       "monthly": "$980/mo",
@@ -93,6 +93,7 @@ window.KORR_DATA = {
       "title": "Property #2 — 487th South Lots",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
+      "parcel": "506-62-102m",
       "price": "$46,500",
       "downPayment": "$650",
       "monthly": "$650/mo",
@@ -101,19 +102,23 @@ window.KORR_DATA = {
       "lots": [
         {
           "id": "A",
-          "status": "available"
+          "status": "available",
+          "parcel": "506-62-102H"
         },
         {
           "id": "B",
-          "status": "available"
+          "status": "available",
+          "parcel": "506-62-102G"
         },
         {
           "id": "C",
-          "status": "available"
+          "status": "available",
+          "parcel": "506-62-102G"
         },
         {
           "id": "D",
-          "status": "available"
+          "status": "available",
+          "parcel": "506-62-102E"
         }
       ],
       "images": [
@@ -195,10 +200,9 @@ window.KORR_DATA = {
       "title": "Property #4 — 411 + Camelback North",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
-      "price": "$45,000",
-      "downPayment": "$5,000",
-      "monthly": "TBD",
-      "interestRate": "12%",
+      "price": "$59,000",
+      "downPayment": "Cash",
+      "monthly": "—",
       "lots": [
         {
           "id": "A",
@@ -210,8 +214,9 @@ window.KORR_DATA = {
         },
         {
           "id": "C",
-          "status": "sold",
-          "price": "$35,000",
+          "status": "available",
+          "parcel": "506-35-702P",
+          "price": "$59,000",
           "terms": "cash"
         },
         {
@@ -225,16 +230,10 @@ window.KORR_DATA = {
           "terms": "$650 down · $650/mo"
         }
       ],
-      "images": [
-        "images/properties/property4/3651",
-        "images/properties/property4/3652",
-        "images/properties/property4/3653",
-        "images/properties/property4/3654",
-        "images/properties/property4/3655"
-      ],
+      "images": [],
       "highlights": [
-        "$2,000 Down / $650 Monthly",
-        "0 of 5 lots available",
+        "$59,000 Cash Only",
+        "1 Lot Available",
         "Directional signs posted on roadway",
         "Just minutes from I-10 freeway"
       ],
@@ -260,18 +259,21 @@ window.KORR_DATA = {
         {
           "id": "2",
           "status": "available",
+          "parcel": "506-35-702K",
           "price": "$59,900",
           "terms": "cash"
         },
         {
           "id": "3",
           "status": "available",
+          "parcel": "506-35-702D",
           "price": "$59,900",
           "terms": "cash"
         },
         {
           "id": "4",
           "status": "available",
+          "parcel": "506-35-702F",
           "price": "$59,900",
           "terms": "cash"
         },
@@ -280,13 +282,7 @@ window.KORR_DATA = {
           "status": "sold"
         }
       ],
-      "images": [
-        "images/properties/property5/20260502_165038",
-        "images/properties/property5/20260502_165040",
-        "images/properties/property5/20260502_165041",
-        "images/properties/property5/20260502_165043",
-        "images/properties/property5/20260502_165140"
-      ],
+      "images": [],
       "highlights": [
         "3 Lots Available",
         "$59,900 Cash Only",
@@ -409,19 +405,23 @@ window.KORR_DATA = {
       "lots": [
         {
           "id": "1",
-          "status": "available"
+          "status": "available",
+          "parcel": "506-22-077J"
         },
         {
           "id": "2",
-          "status": "available"
+          "status": "available",
+          "parcel": "506-22-077H"
         },
         {
           "id": "3",
-          "status": "available"
+          "status": "available",
+          "parcel": "506-22-077G"
         },
         {
           "id": "4",
-          "status": "available"
+          "status": "available",
+          "parcel": "506-22-077F"
         }
       ],
       "images": [],
@@ -441,6 +441,7 @@ window.KORR_DATA = {
       "title": "Property #9 — 339th & Middle Lower Buckeye",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
+      "parcel": "504-13-090G",
       "price": "$69,900",
       "downPayment": "$980",
       "monthly": "$980/mo",
@@ -497,6 +498,7 @@ window.KORR_DATA = {
       "title": "Property #10 — 487th & Salome North",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
+      "parcel": "506-62-102Q",
       "price": "$45,000",
       "downPayment": "$650",
       "monthly": "$650/mo",
@@ -511,13 +513,7 @@ window.KORR_DATA = {
           "status": "sold"
         }
       ],
-      "images": [
-        "images/properties/487th-north/3490749851073172405",
-        "images/properties/487th-north/4141231167639052991",
-        "images/properties/487th-north/4566783271462663232",
-        "images/properties/487th-north/745045989480643810",
-        "images/properties/487th-north/8153493523858286843"
-      ],
+      "images": [],
       "highlights": [
         "1 of 2 lots available",
         "$650 Down / $650 Monthly",
@@ -535,7 +531,7 @@ window.KORR_DATA = {
       "title": "Property #11 — 339th & East Lower Buckeye",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
-      "parcel": "504-13-090M/K",
+      "parcel": "504-13-090P",
       "price": "$69,900",
       "downPayment": "$980",
       "monthly": "$980/mo",
@@ -576,6 +572,7 @@ window.KORR_DATA = {
       "title": "Property #12 — 367th & Salome",
       "location": "tonopah",
       "locationLabel": "Tonopah, AZ",
+      "parcel": "506-42-117",
       "price": "$49,900",
       "downPayment": "$700",
       "monthly": "$700/mo",

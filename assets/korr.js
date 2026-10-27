@@ -78,7 +78,9 @@
   function instrumentHTML (p, i) {
     const st = status(p)
     const imgs = p.images || []
-    const parcel = p.parcel ? 'Parcel ' + esc(p.parcel) : 'Parcel on file'
+    const parcel = p.parcel
+      ? 'Parcel ' + esc(p.parcel)
+      : (p.lots || []).some(l => l.parcel) ? 'Parcel numbers by lot' : 'Parcel on file'
     const plates = imgs.length
       ? imgs.slice(0, 2).map(im =>
           `<img src="${esc(w640(im))}" alt="" loading="lazy" decoding="async" width="220" height="165">`).join('') +
@@ -205,9 +207,9 @@
           <div class="plat-lot ${l.status === 'available' ? 'open' : 'gone'}">
             ${esc(l.id)}<small>${l.status === 'available' ? 'OPEN' : 'CONVEYED'}</small>
           </div>`).join('')}</div>
-        ${(p.lots || []).some(l => l.price || l.terms) ? `<ul class="list-doc">${(p.lots || [])
-          .filter(l => l.price || l.terms)
-          .map(l => `<li>${ico('check')}<span>Lot ${esc(l.id)} — ${esc(l.price || '')}${l.terms ? ' · ' + esc(l.terms) : ''}</span></li>`)
+        ${(p.lots || []).some(l => l.parcel || l.price || l.terms) ? `<ul class="list-doc">${(p.lots || [])
+          .filter(l => l.parcel || l.price || l.terms)
+          .map(l => `<li>${ico('check')}<span>Lot ${esc(l.id)}${l.parcel ? ' — Parcel ' + esc(l.parcel) : ''}${l.price ? ' — ' + esc(l.price) : ''}${l.terms ? ' · ' + esc(l.terms) : ''}</span></li>`)
           .join('')}</ul>` : ''}
       </div>`
 

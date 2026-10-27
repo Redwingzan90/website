@@ -54,16 +54,22 @@ sites listing bank-financed land cannot truthfully copy this.
 
 ## Capabilities and Constraints
 
-- **11 properties**: Tonopah AZ land parcels (IDs 1–11).
-- **40 individually tracked lots**, currently 26 available / 14 sold.
+- **12 properties**: Tonopah AZ land parcels (IDs 1–12).
+- **46 individually tracked lots**, currently 33 available / 13 sold.
 - Prices $29,900–$69,900.
 - Down payments from $425. Monthly payments $425–$980. AZ land financed at 12% interest.
   Loan terms range 7½–11 years. No pre-payment penalty on any property.
 - Some properties carry deed restrictions (Property #11) and some are noted close to
   electric.
-- Property #4 has mixed lot-level sale terms. All available lots on Property #5 are
-  cash-only at $59,900.
-- Properties **#1 (Parcel 506-42-024)** and **#8 (Harquahala)** have **no photographs**.
+- Property #4, Lot C (Parcel 506-35-702P), is available for $59,000 cash.
+- Property #2 Lots A–D have Parcels 506-62-102H, 506-62-102G, 506-62-102G,
+  and 506-62-102E, respectively.
+- Property #5, Lots 2–4, are available for $59,900 cash (Parcels 506-35-702K,
+  506-35-702D, 506-35-702F).
+- Property #8 lots 1–4 have Parcels 506-22-077J, 506-22-077H, 506-22-077G,
+  and 506-22-077F, respectively.
+- Property #12 — 367th & Salome: Parcel 506-42-117.
+- Properties **#1 (Parcel 506-42-024Z)** and **#8 (Harquahala)** have **no photographs**.
   Confirmed 2026-08-23: none available.
 - Authoritative data snapshot: `data.snapshot.json`, extracted verbatim from the **live
   site** (korrbuildingcollc.netlify.app) on 2026-08-23. This is the source of truth for
@@ -93,7 +99,10 @@ sites listing bank-financed land cannot truthfully copy this.
 Real and usable:
 
 - 51 photographs of Arizona parcels, with responsive `-640`/`-1280` webp variants.
-- Recorded parcel numbers: 506-27-066, 506-16-004C, 506-74-024, 504-13-090M/K, 176581.
+- Recorded parcel numbers: 506-42-024Z, 506-62-102m, 506-62-102H, 506-62-102G,
+  506-62-102E, 506-35-702P, 506-35-702K, 506-35-702D, 506-35-702F, 506-22-077J,
+  506-22-077H, 506-22-077G, 506-22-077F, 506-27-066, 506-16-004C, 506-74-024,
+  504-13-090G, 506-62-102Q, 504-13-090P, 506-42-117, 176581.
 - Real turn-by-turn directions to every property.
 - Real lot-level availability across 40 lots.
 - Contracts closed out by: NBTS. Title company: NBTS.
