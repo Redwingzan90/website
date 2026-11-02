@@ -122,8 +122,8 @@ window.KORR_DATA = {
         }
       ],
       "images": [
-        "images/properties/property2/487th-south-survey",
         "images/properties/property2/20260124_164822",
+        "images/properties/property2/487th-south-survey",
         "images/properties/property2/20260124_164824",
         "images/properties/property2/20260124_164825",
         "images/properties/property2/20260124_164827",
@@ -177,9 +177,9 @@ window.KORR_DATA = {
         }
       ],
       "images": [
+        "images/properties/539th-baseline/unnamed",
         "images/properties/539th-baseline/539th-baseline-survey",
         "images/properties/539th-baseline/539th-baseline-vicinity",
-        "images/properties/539th-baseline/unnamed",
         "images/properties/539th-baseline/20260207_111719",
         "images/properties/539th-baseline/20260207_111721",
         "images/properties/539th-baseline/20260207_111724",
@@ -235,8 +235,8 @@ window.KORR_DATA = {
         }
       ],
       "images": [
-        "images/properties/property4/411th-camelback-layout",
         "images/properties/property4/3651",
+        "images/properties/property4/411th-camelback-layout",
         "images/properties/property4/3652",
         "images/properties/property4/3653",
         "images/properties/property4/3654",
@@ -399,9 +399,9 @@ window.KORR_DATA = {
         }
       ],
       "images": [
+        "images/properties/property7/unnamed",
         "images/properties/property7/411th-olive-survey",
         "images/properties/property7/411th-olive-parcel-map",
-        "images/properties/property7/unnamed",
         "images/properties/property7/Screenshot_20260427_163951_Facebook",
         "images/properties/property7/Screenshot_20260427_163954_Facebook",
         "images/properties/property7/Screenshot_20260427_163957_Facebook",
@@ -500,8 +500,8 @@ window.KORR_DATA = {
         }
       ],
       "images": [
-        "images/properties/property9/339th-middle-parcel-survey",
         "images/properties/339th-salome/20260207_154639",
+        "images/properties/property9/339th-middle-parcel-survey",
         "images/properties/339th-salome/20260207_154640",
         "images/properties/339th-salome/20260207_154642",
         "images/properties/339th-salome/20260207_154644",
@@ -601,8 +601,8 @@ window.KORR_DATA = {
         "Go down the hill to lot 5, just before the sign in front of the property"
       ],
       "images": [
-        "images/properties/property11/339th-east-parcel-survey",
         "images/properties/property11/3893",
+        "images/properties/property11/339th-east-parcel-survey",
         "images/properties/property11/3895",
         "images/properties/property11/3897",
         "images/properties/property11/3899",
