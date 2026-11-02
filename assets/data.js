@@ -70,7 +70,9 @@ window.KORR_DATA = {
           "status": "available"
         }
       ],
-      "images": [],
+      "images": [
+        "images/properties/property1/property1-363rd-rosier-survey"
+      ],
       "highlights": [
         "1.25 Acre Lot Available",
         "$980 Down / $980 Monthly",
