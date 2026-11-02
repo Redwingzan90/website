@@ -23,7 +23,8 @@ house listings.
 - every property, lot, price, term, parcel number and direction step round-trips
 - no availability claim contradicts the lot array (e.g. a highlight saying
   "3 Lots Available" when only one lot is open)
-- no photograph appears on two different properties
+- every photograph in the source snapshot stays on its property, even when the
+  same image file is also used by another property
 - an advertised loan term is reachable at the advertised monthly payment
 - every image path resolves on disk
 - every contact number is still reachable somewhere on the site

@@ -1,6 +1,5 @@
 // Builds published property data from the authoritative snapshot.
 import fs from 'node:fs'
-import crypto from 'node:crypto'
 
 const snap = JSON.parse(fs.readFileSync('data.snapshot.json', 'utf8'))
 const newPhotos = JSON.parse(fs.readFileSync('_new-photos.json', 'utf8'))
@@ -25,58 +24,6 @@ const properties = snap.properties.filter(p => !p.isHouse && arizonaLocations.ha
   }
   return out
 })
-
-// Keep each photo on one property, using folder provenance when available.
-const sha = (f) => {
-  try { return crypto.createHash('sha1').update(fs.readFileSync(f)).digest('hex') }
-  catch { return null }
-}
-const fileFor = (base) => /\.(webp|png|jpe?g)$/i.test(base) ? base : `${base}-640.webp`
-
-// hash -> [{id, base}]
-const seen = new Map()
-for (const p of properties) {
-  for (const base of p.images || []) {
-    const h = sha(fileFor(base))
-    if (!h) continue
-    if (!seen.has(h)) seen.set(h, [])
-    seen.get(h).push({ id: p.id, base })
-  }
-}
-
-// Provenance: the directory that actually names the parcel wins.
-const OWNS = [
-  { dir: '411th-olive',     id: 7,  why: 'folder "411th and Olive" — #7 is 411th & Olive' },
-  { dir: 'property7',       id: 7,  why: 'the 411th-and-Olive screenshots belong to #7' },
-  { dir: 'property2',       id: 2,  why: 'folder property2 — #2 is 487th South' },
-  { dir: 'salome-highway',  id: 6,  why: 'folder salome-highway — #6 is Salome Highway' },
-  { dir: '539th-baseline',  id: 3,  why: 'folder 539th-baseline — #3 is 539th & Baseline' },
-]
-const preferredOwner = (candidates) => {
-  for (const c of candidates) {
-    const rule = OWNS.find(o => c.base.includes('/' + o.dir + '/'))
-    if (rule && candidates.some(x => x.id === rule.id)) return { id: rule.id, why: rule.why }
-  }
-  // otherwise keep it on whichever property has the fewest other photographs
-  const counts = new Map(candidates.map(c => [c.id, (properties.find(p => p.id === c.id).images || []).length]))
-  const winner = [...counts.entries()].sort((a, b) => a[1] - b[1])[0][0]
-  return { id: winner, why: 'kept on the property with the fewest alternatives' }
-}
-
-let removed = 0
-for (const [, cands] of seen) {
-  const ids = [...new Set(cands.map(c => c.id))]
-  if (ids.length < 2) continue
-  const keep = preferredOwner(cands)
-  for (const c of cands) {
-    if (c.id === keep.id) continue
-    const prop = properties.find(p => p.id === c.id)
-    prop.images = prop.images.filter(b => b !== c.base)
-    removed++
-  }
-  owner.push(`photo shared by #${ids.join(' / #')} — kept on #${keep.id} (${keep.why})`)
-}
-if (removed) log.push(`  de-duplicated ${removed} photo slots across properties`)
 
 // Align availability highlights with each property's lot statuses.
 const COUNT_RE = /^(all|\d+)\s+(lots?|parcels?)\s+available$/i
