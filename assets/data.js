@@ -541,6 +541,7 @@ window.KORR_DATA = {
       ],
       "images": [
         "images/properties/487th-north/745045989480643810",
+        "images/properties/487th-north/487th-north-lot-division-survey",
         "images/properties/487th-north/3490749851073172405",
         "images/properties/487th-north/4141231167639052991",
         "images/properties/487th-north/4566783271462663232",
