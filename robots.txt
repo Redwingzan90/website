@@ -6,3 +6,4 @@ Disallow: /DESIGN.md
 Disallow: /data.snapshot.json
 
 Sitemap: https://korrbuildingcollc.netlify.app/sitemap.xml
+Sitemap: https://korrbuildingcollc.netlify.app/land/sitemap.xml

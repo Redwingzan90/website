@@ -566,6 +566,15 @@
 
     initCallbar()
 
+    // Deep links: /#property-8 opens that property, so a listing posted on
+    // another site can point straight at one property.
+    const openFromHash = () => {
+      const m = /^#property-(\d+)$/.exec(location.hash)
+      if (m && D.properties.some(p => p.id === +m[1])) openSheet(+m[1])
+    }
+    openFromHash()
+    window.addEventListener('hashchange', openFromHash)
+
     // the recording stamp
     const slot = $('#stamp')
     if (slot && window.KORR_INK) { try { window.KORR_INK.mount(slot) } catch (e) {} }
