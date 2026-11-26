@@ -14,7 +14,17 @@ Static site — no build step, no framework. Deployed on Netlify from this repo.
 node _build-data.mjs && node _verify-data.mjs
 ```
 
-`_verify-data.mjs` must print **PASS** before you commit. It verifies every
+`_verify-data.mjs` must print **PASS** before you commit.
+
+After any property change, also rebuild the per-property pages in `land/`
+(one plain HTML page per property, for search engines and for linking from
+listings) and their sitemap:
+
+```bash
+node _build-data.mjs && node _build-pages.mjs && node _verify-data.mjs
+```
+
+A link to `/#property-8` opens that property on the main page. It verifies every
 published Arizona land fact against the snapshot and rejects non-Arizona or
 house listings.
 
