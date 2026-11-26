@@ -54,8 +54,8 @@ sites listing bank-financed land cannot truthfully copy this.
 
 ## Capabilities and Constraints
 
-- **12 properties**: Tonopah AZ land parcels (IDs 1–12).
-- **46 individually tracked lots**, currently 33 available / 13 sold.
+- **11 properties**: Tonopah AZ land parcels (IDs 1–11).
+- **41 individually tracked lots**, currently 27 available / 14 sold.
 - Prices $29,900–$69,900.
 - Down payments from $425. Monthly payments $425–$980. AZ land financed at 12% interest.
   Loan terms range 7½–11 years. No pre-payment penalty on any property.
@@ -68,7 +68,6 @@ sites listing bank-financed land cannot truthfully copy this.
   506-35-702D, 506-35-702F).
 - Property #8 lots 1–4 have Parcels 506-22-077J, 506-22-077H, 506-22-077G,
   and 506-22-077F, respectively.
-- Property #12 — 367th & Salome: Parcel 506-42-117.
 - Properties **#1 (Parcel 506-42-024Z)** and **#8 (Harquahala)** have **no photographs**.
   Confirmed 2026-08-23: none available.
 - Authoritative data snapshot: `data.snapshot.json`, extracted verbatim from the **live
@@ -98,13 +97,13 @@ sites listing bank-financed land cannot truthfully copy this.
 
 Real and usable:
 
-- 51 photographs of Arizona parcels, with responsive `-640`/`-1280` webp variants.
+- 70 photographs of Arizona parcels, with responsive `-640`/`-1280` webp variants.
 - Recorded parcel numbers: 506-42-024Z, 506-62-102m, 506-62-102H, 506-62-102G,
   506-62-102E, 506-35-702P, 506-35-702K, 506-35-702D, 506-35-702F, 506-22-077J,
   506-22-077H, 506-22-077G, 506-22-077F, 506-27-066, 506-16-004C, 506-74-024,
-  504-13-090G, 506-62-102Q, 504-13-090P, 506-42-117, 176581.
+  504-13-090G, 506-62-102Q, 504-13-090P, 176581.
 - Real turn-by-turn directions to every property.
-- Real lot-level availability across 40 lots.
+- Real lot-level availability across 41 lots.
 - Contracts closed out by: NBTS. Title company: NBTS.
 - Five folders of additional unprocessed photos in `add images/`, mapping to Properties
   #4, #7, #10, #11, #5.
