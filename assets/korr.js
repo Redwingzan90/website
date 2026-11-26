@@ -52,9 +52,9 @@
 
   function status (p) {
     const o = openLots(p), t = totalLots(p)
-    if (o === 0) return { cls: 'closed', text: 'Conveyed' }
-    if (o === t) return { cls: 'open', text: o + (o === 1 ? ' lot open' : ' lots open') }
-    return { cls: 'part', text: o + ' of ' + t + ' open' }
+    if (o === 0) return { cls: 'closed', text: 'Sold out' }
+    if (o === t) return { cls: 'open', text: o + (o === 1 ? ' lot available' : ' lots available') }
+    return { cls: 'part', text: o + ' of ' + t + ' available' }
   }
 
   /* ------------------------------------------------------------- the state */
@@ -85,7 +85,7 @@
       ? imgs.slice(0, 2).map(im =>
           `<img src="${esc(w640(im))}" alt="" loading="lazy" decoding="async" width="220" height="165">`).join('') +
         (imgs.length > 2 ? `<span class="plate-more">+${imgs.length - 2}</span>` : '')
-      : `<span class="no-plate">${ico('noimg')}<span>Plate to follow</span></span>`
+      : `<span class="no-plate">${ico('noimg')}<span>Photos coming</span></span>`
 
     const lotStrip = `<span class="lots" aria-hidden="true">${(p.lots || []).map(l =>
       `<span class="lot ${l.status === 'available' ? 'open' : 'gone'}">${esc(l.id)}</span>`).join('')}</span>`
@@ -144,7 +144,7 @@
     })
     if (!list.length) {
       html = OK
-        ? `<p class="typed" style="padding:2rem .5rem">No instruments match this filter.</p>`
+        ? `<p class="typed" style="padding:2rem .5rem">No properties match this filter.</p>`
         : `<div style="padding:2.5rem .5rem;border-bottom:1px solid var(--rule)">
              <p class="h3">The schedule could not be loaded.</p>
              <p class="prose" style="margin-top:.6rem">
@@ -154,7 +154,7 @@
            </div>`
     }
     host.innerHTML = html
-    $('#schedCount').textContent = list.length + (list.length === 1 ? ' instrument' : ' instruments')
+    $('#schedCount').textContent = list.length + (list.length === 1 ? ' property' : ' properties')
     $$('.inst', host).forEach(b => b.addEventListener('click', () => openSheet(+b.dataset.id, b)))
     if (window.KORR_MOTION) window.KORR_MOTION.bind(host)
   }
@@ -195,17 +195,17 @@
            </div>` : ''}
          </div>`
       : `<div class="no-plate" style="aspect-ratio:3/2">${ico('noimg')}
-           <span>No photograph of record</span>
+           <span>No photos yet</span>
            <span style="text-transform:none;letter-spacing:0;font-size:.66rem;max-width:26ch;line-height:1.5">
              Call ${esc(D.phone)} for a pin drop or to walk the parcel.</span>
          </div>`
 
     const platHTML = `
       <div class="plat">
-        <h3 class="caption">Lots of record</h3>
+        <h3 class="caption">Lots</h3>
         <div class="plat-grid">${(p.lots || []).map(l => `
           <div class="plat-lot ${l.status === 'available' ? 'open' : 'gone'}">
-            ${esc(l.id)}<small>${l.status === 'available' ? 'OPEN' : 'CONVEYED'}</small>
+            ${esc(l.id)}<small>${l.status === 'available' ? 'OPEN' : 'SOLD'}</small>
           </div>`).join('')}</div>
         ${(p.lots || []).some(l => l.parcel || l.price || l.terms) ? `<ul class="list-doc">${(p.lots || [])
           .filter(l => l.parcel || l.price || l.terms)
@@ -223,7 +223,7 @@
         <div>
           ${galHTML}
           ${p.highlights && p.highlights.length ? `
-            <h3 class="caption" style="margin-top:2.2rem">Of note</h3>
+            <h3 class="caption" style="margin-top:2.2rem">Highlights</h3>
             <ul class="list-doc">${p.highlights.map(h => `<li>${ico('check')}<span>${esc(h)}</span></li>`).join('')}</ul>` : ''}
           ${p.directions && p.directions.length ? `
             <h3 class="caption" style="margin-top:2.2rem">How to reach it</h3>
@@ -385,7 +385,7 @@
         msg.hidden = false
       } finally {
         btn.disabled = false
-        btn.textContent = 'Send enquiry'
+        btn.textContent = 'Request a call back'
       }
     })
   }
